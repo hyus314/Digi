@@ -12,6 +12,7 @@ footer {
 
 .navbar {
     padding: 0;
+    width: 100%;
 }
 
 .logo-container {
@@ -19,6 +20,10 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.navbar-toggler-icon {
+    color: white !important;
 }
 
 #navbarNav > ul {
