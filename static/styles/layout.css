@@ -33,13 +33,37 @@ footer {
 
 #navbarNav > ul > li {
     padding-inline: 2em !important;
-
 }
 
+
+.outside-nav {
+    padding-inline: 1em;
+}
+
+li.nav-item.lead {
+    padding: 1em;
+    text-align: center;
+}
+
+.outside-nav > a,
 #navbarNav > ul > li > a {
     color: white;
 }
 
+.outside-nav > a:hover,
 #navbarNav > ul > li > a:hover {
     color: lightgray;
+}
+
+.outside-nav {
+    width: 15%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.outside-nav > a {
+    white-space: nowrap;
 }
