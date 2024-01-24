@@ -1,6 +1,21 @@
 {% extends "layout.html" %}
 
+{% block title %}
+Register
+{% endblock %}
 
 {% block main %}
-you are in the register page
+<form action="/register" method="post">
+    <div class="reg-form lead">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto lead" name="username" placeholder="Username"
+            type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto lead" name="password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto lead" name="confirmation" placeholder="Confirm Password" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </div>
+</form>
 {% endblock %}
