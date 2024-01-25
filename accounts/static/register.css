@@ -1,4 +1,12 @@
 form {
-    padding-bottom: 200px;
-    height: 100%;
+    padding-block: 3em;
+
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
