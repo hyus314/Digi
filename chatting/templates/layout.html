@@ -10,7 +10,10 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'styles/layout.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    {% block dependancies %}
+    {% endblock %}
 </head>
 
 <body>
@@ -44,7 +47,7 @@
             </div>
         </div>
     </nav>
-    {% block main %}{% endblock %}
+        {% block main %}{% endblock %}
     <footer class="footer bg-body-tertiary text-center text-lg-start">
         <!-- Copyright -->
         <div class="text-center p-3 lead" style="background-color: rgba(0, 0, 0, 0.05);">
