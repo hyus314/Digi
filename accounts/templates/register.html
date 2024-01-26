@@ -15,45 +15,38 @@ Register
         <div class="line-div">
             <p class="lead">Username:</p>
             <div class="form-floating mb-3">
-                <input name="username" type="text" class="form-control" id="floatingInput" placeholder="digi_user">
+                <input name="username" type="text" autocomplete="off" class="form-control" id="username" placeholder="digi_user">
                 <label for="floatingInput">Username</label>
             </div>
         </div>
         <div class="line-div">
             <p class="lead">First Name:</p>
             <div class="form-floating mb-3">
-                <input name="first" type="text" class="form-control" id="floatingInput" placeholder="John">
+                <input name="first" type="text" autocomplete="off" class="form-control" id="first" placeholder="John">
                 <label for="floatingInput">First Name</label>
             </div>
         </div>
         <div class="line-div">
             <p class="lead">Last Name:</p>
             <div class="form-floating mb-3">
-                <input name="last" type="text" class="form-control" id="floatingInput" placeholder="Doe">
+                <input name="last" type="text" autocomplete="off" class="form-control" id="last" placeholder="Doe">
                 <label for="floatingInput">Last Name</label>
             </div>
         </div>
         <div class="line-div">
             <p class="lead">Email:</p>
             <div class="form-floating mb-3">
-                <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input name="email" type="email" autocomplete="off" class="form-control" id="email" placeholder="name@example.com">
                 <label for="floatingInput">Email address</label>
             </div>
         </div>
-        <!-- <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username"
-            type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm Password" type="password">
-        </div> -->
+        
     </div>
     <div class="inputs-div">
         <div class="line-div">
             <p class="lead">Password:</p>
             <div class="form-floating mb-3">
-                <input name="password" type="email" class="form-control" id="floatingInput"
+                <input name="password" type="password" class="form-control" id="password"
                 placeholder="name@example.com">
                 <label for="floatingInput">Password</label>
             </div>
@@ -61,7 +54,7 @@ Register
         <div class="line-div">
             <p class="lead">Confirm Password:</p>
             <div class="form-floating mb-3">
-                <input name="confirmation" type="email" class="form-control" id="floatingInput"
+                <input name="confirmation" type="password" class="form-control" id="confirmation"
                     placeholder="name@example.com">
                 <label for="floatingInput">Confirm Password</label>
             </div>
@@ -69,4 +62,6 @@ Register
     </div>
     <button class="btn btn-primary" type="submit">Register</button>
 </form>
+
+<script src="{% static 'js/validate.js' %}" ></script>
 {% endblock %}
