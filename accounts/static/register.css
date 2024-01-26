@@ -1,12 +1,54 @@
 form {
+    background-color: #FAF9F6;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Added shadow effect */
     padding-block: 3em;
-
-}
-
-form {
+    border: 1px solid black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 50%;
+    margin: 3em auto;
+    border-radius: 10px; /* Rounded corners */
 }
 
+.inputs-div {
+    margin-block: 1em;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #00001C, #0F0C19); /* Gradient background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3); /* Added shadow effect */
+}
+
+.line-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1em 2em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+}
+
+.line-div > p {
+    color: white;
+    padding-top: 5px;
+    font-size: 30px;
+}
+
+.line-div > input {
+    align-self: center;
+    background-color: #0F0C19; /* Match input background with parent */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px; /* Rounded corners for inputs */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); /* Added shadow effect */
+    color: white;
+}
+
+/* Hover effect for inputs */
+.line-div > input:hover {
+    background-color: #1A162A;
+}
