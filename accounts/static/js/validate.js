@@ -18,3 +18,4 @@ usernameInput.addEventListener('blur', function (event) {
     let element = formChildren.querySelector('p.lead.message');
     formChildren.removeChild(element);
 });
+
