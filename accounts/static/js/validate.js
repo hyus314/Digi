@@ -1,5 +1,8 @@
+// username:
+
 let lineDivs = document.getElementsByClassName('line-div');
 let usernameInput = document.getElementById('username');
+let regex = /^[a-z0-9_-]{3,16}$/;
 
 usernameInput.addEventListener('focus', function (event) {
     console.log('focused');
@@ -15,7 +18,23 @@ usernameInput.addEventListener('focus', function (event) {
 
 usernameInput.addEventListener('blur', function (event) {
     let formChildren = document.getElementsByClassName('inputs-div')[0];
-    let element = formChildren.querySelector('p.lead.message');
-    formChildren.removeChild(element);
+    let elements = formChildren.querySelectorAll('p.lead.message');
+    for (const element of elements) {
+        formChildren.removeChild(element);
+    }
 });
 
+usernameInput.addEventListener('change', function (event) {
+    let currentValue = document.getElementById('username').value;
+    if (currentValue) {
+        if (regex.test(currentValue)) {
+            usernameInput.style.backgroundColor = '#83f28f';
+        } else {
+            usernameInput.style.backgroundColor = '#FF7F7F';
+        }
+    } else {
+        usernameInput.style.backgroundColor = '';
+    }
+});
+
+// names:
