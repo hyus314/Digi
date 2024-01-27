@@ -52,3 +52,20 @@ form {
 .line-div > input:hover {
     background-color: #1A162A;
 }
+
+#password-validations {
+    padding-block: 1em;
+    display: none;
+}
+
+#password-validations > p {
+    color: white;
+}
+
+/* #pass-length-min {
+    color: green !important;
+} */
+
+#password-validations > p > i {
+    padding-left: 0.5em;
+}

@@ -5,7 +5,6 @@ let usernameInput = document.getElementById('username');
 let regex = /^[a-z0-9_-]{3,16}$/;
 
 usernameInput.addEventListener('focus', function (event) {
-    console.log('focused');
     let message = document.createElement('p');
     message.classList.add('lead');
     message.classList.add('message');
@@ -43,15 +42,46 @@ firstN_input.addEventListener('blur', clearForm);
 lastN_input.addEventListener('blur', clearForm);
 
 function displayNameMessage() {
-    console.log('focused');
     let message = document.createElement('p');
     message.classList.add('lead');
     message.classList.add('message');
     message.style.color = 'white';
     message.style.paddingLeft = '1em';
-    
+
     message.innerHTML = 'Please use only alphabetical characters.'
     lineDivs[3].insertAdjacentElement('beforebegin', message);
+}
+
+// password:
+
+let password = document.getElementById('password');
+let confirmation = document.getElementById('confirmation');
+let password_regex = /^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$/;
+let password_validations = document.getElementById('password-validations');
+
+// Passwords should consist of:
+// At least 8 characters,
+// 20 characters max,
+// At least one capital letter,
+// At least one numeric character,
+// Only Alphanumeric:
+
+password.addEventListener('focus', showPasswordValidations);
+confirmation.addEventListener('focus', showPasswordValidations);
+
+password.addEventListener('blur', hidePasswordValidations);
+confirmation.addEventListener('blur', hidePasswordValidations);
+
+function showPasswordValidations() {
+    password_validations.style.display = 'block';
+}
+
+function hidePasswordValidations() {
+    password_validations.style.display = 'none';
+}
+
+function validatePassword() {
+    
 }
 
 // global functions:
