@@ -17,7 +17,7 @@ usernameInput.addEventListener('focus', function (event) {
 
 usernameInput.addEventListener('blur', clearForm);
 
-usernameInput.addEventListener('change', function (event) {
+usernameInput.addEventListener('input', function (event) {
     let currentValue = document.getElementById('username').value;
     if (currentValue) {
         if (regex.test(currentValue)) {
@@ -67,9 +67,11 @@ let password_validations = document.getElementById('password-validations');
 // Only Alphanumeric:
 
 password.addEventListener('focus', showPasswordValidations);
-confirmation.addEventListener('focus', showPasswordValidations);
-
+password.addEventListener('input', validatePassword);
 password.addEventListener('blur', hidePasswordValidations);
+
+confirmation.addEventListener('focus', showPasswordValidations);
+confirmation.addEventListener('input', validatePassword);
 confirmation.addEventListener('blur', hidePasswordValidations);
 
 function showPasswordValidations() {
@@ -80,8 +82,101 @@ function hidePasswordValidations() {
     password_validations.style.display = 'none';
 }
 
+//   <i class="fa-solid fa-circle-check"></i> <---- green check for validations
+//   <p id="pass-length-min">Password has minimum 8 characters</p>
+//   <p id="pass-length-max">Password does not exceed 20 characters</p>
+//   <p id="pass-capital">Password has one capital letter</p>
+//   <p id="pass-numeric">Password has one numeric character</p>
+//   <p id="pass-alpha-numeric">Password consists only of alphanumeric characters</p>
+//   <p id="pass-match">Passwords match</p>
+
+
 function validatePassword() {
-    
+    let passwordValue = String(document.getElementById('password').value);
+    let confirmationValue = document.getElementById('confirmation').value;
+
+
+    let pass_length_min = document.getElementById('pass-length-min');
+    if (passwordValue.length >= 8) {
+        addGreenCheck(pass_length_min);
+    } else {
+        removeGreenCheck(pass_length_min);
+    }
+
+    let pass_length_max = document.getElementById('pass-length-max')
+    if (passwordValue.length < 20 && passwordValue) {
+        addGreenCheck(pass_length_max);
+    } else {
+        removeGreenCheck(pass_length_max);
+    }
+
+    let pass_has_capital_letter = document.getElementById('pass-capital');
+    let hasCapitalLetter = false;
+    for (const letter of passwordValue) {
+        if (/[A-Z]/.test(letter)) {
+            hasCapitalLetter = true;
+            break;
+        }
+    }
+
+    if (hasCapitalLetter) {
+        addGreenCheck(pass_has_capital_letter);
+    } else {
+        removeGreenCheck(pass_has_capital_letter);
+    }
+
+    let pass_has_numeric = document.getElementById('pass-numeric');
+    let hasNumeric = false;
+    for (const letter of passwordValue) {
+        if (/[0-9]/.test(letter)) {
+            hasNumeric = true;
+            break;
+        }
+    }
+
+
+    if (hasNumeric) {
+        addGreenCheck(pass_has_numeric);
+    } else {
+        removeGreenCheck(pass_has_numeric);
+    }
+
+    let pass_has_alphanumeric = document.getElementById('pass-alpha-numeric');
+    let passDoesNotHaveAlphaNumeric = true;
+
+    for (const letter of passwordValue) {
+        if (/[^a-zA-Z0-9]/.test(letter)) {
+            passDoesNotHaveAlphaNumeric = false;
+            break;
+        }
+    }
+
+    if (passDoesNotHaveAlphaNumeric && passwordValue) {
+        addGreenCheck(pass_has_alphanumeric);
+    } else {
+        removeGreenCheck(pass_has_alphanumeric);
+    }
+
+    let passMatch = document.getElementById('pass-match');
+    if (passwordValue === confirmationValue && passwordValue && confirmationValue) {
+        addGreenCheck(passMatch);
+    } else {
+        removeGreenCheck(passMatch);
+    }
+
+    function addGreenCheck(element) {
+        if (!element.innerHTML.includes(' <i class="fa-solid fa-circle-check"></i>')) {
+            element.innerHTML += ' <i class="fa-solid fa-circle-check"></i>';
+        }
+        element.style.color = '#83f28f';
+        element.style.setProperty('color', '#83f28f', 'important');
+    }
+
+    function removeGreenCheck(element) {
+        element.innerHTML = element.innerHTML.replace(/ <i class="fa-solid fa-circle-check"><\/i>/g, '');
+        element.style.color = '';
+        element.style.setProperty('color', '', 'important');
+    }
 }
 
 // global functions:

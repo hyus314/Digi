@@ -54,11 +54,14 @@ form {
 }
 
 #password-validations {
+    padding-left: 1em;
+    width: 100%;
     padding-block: 1em;
     display: none;
 }
 
 #password-validations > p {
+    text-align: left;
     color: white;
 }
 
