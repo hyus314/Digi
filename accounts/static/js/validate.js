@@ -83,12 +83,6 @@ function hidePasswordValidations() {
 }
 
 //   <i class="fa-solid fa-circle-check"></i> <---- green check for validations
-//   <p id="pass-length-min">Password has minimum 8 characters</p>
-//   <p id="pass-length-max">Password does not exceed 20 characters</p>
-//   <p id="pass-capital">Password has one capital letter</p>
-//   <p id="pass-numeric">Password has one numeric character</p>
-//   <p id="pass-alpha-numeric">Password consists only of alphanumeric characters</p>
-//   <p id="pass-match">Passwords match</p>
 
 
 function validatePassword() {
