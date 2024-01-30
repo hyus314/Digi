@@ -81,13 +81,21 @@ form {
     padding-left: 0.5em;
 }
 
-#alert {
-    display: none !important;
+#alert-container {
+    width: 100%;
+    /* background-color: rebeccapurple; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.alert {
+    /* display: none !important; */
     background-color: #009FE3;
     width: 71%;
     border-radius: 10px;
 }
 
-#alert>svg {
+.alert>svg {
     width: 20px;
 }
