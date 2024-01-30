@@ -34,30 +34,106 @@ function createAlert(message) {
 
 }
 
-submitBtn.addEventListener('click', function (event) {
-    // username
-    // /^[a-z0-9_-]{3,16}$/;
 
+const username_regex = /^[a-z0-9_-]{3,16}$/
+const name_regex = /^[a-zA-Z]+$/;
+const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+submitBtn.addEventListener('click', function (event) {
     let alertsContainer = document.getElementById('alert-container');
 
+    let messages = [];
+
+    let usernameInput = document.getElementById('username').value;
+    if (!username_regex.test(usernameInput)) {
+        messages.push('Username is not in correct format.')
+    }
+
+    let firstName = document.getElementById('first').value;
+    let lastName = document.getElementById('last').value;
+
+    if (!name_regex.test(firstName) || !name_regex.test(lastName)) {
+        messages.push('Name is not in correct format.');
+    }
+
+    let email = document.getElementById('email').value;
+
+    if (!email_regex.test(email)) {
+        messages.push('Email is not in correct format.');
+    }
+
+    let passwordValue = String(document.getElementById('password').value);
+    let confirmationValue = document.getElementById('confirmation').value;
+
+
+    if (passwordValue.length < 8) {
+        messages.push('Password is too short.');
+    } else if (passwordValue.length > 20) {
+        messages.push('Password is too long.');
+    }
+
+    let hasCapitalLetter = false;
+    for (const letter of passwordValue) {
+        if (/[A-Z]/.test(letter)) {
+            hasCapitalLetter = true;
+            break;
+        }
+    }
+
+    if (!hasCapitalLetter) {
+        messages.push('Password does not include a capital letter.');
+    }
+
+    let hasNumeric = false;
+    for (const letter of passwordValue) {
+        if (/[0-9]/.test(letter)) {
+            hasNumeric = true;
+            break;
+        }
+    }
+
+    if (!hasNumeric) {
+        messages.push('Password does not include a number.');
+    }
+
+    let passDoesNotHaveAlphaNumeric = true;
+
+    for (const letter of passwordValue) {
+        if (/[^a-zA-Z0-9]/.test(letter)) {
+            passDoesNotHaveAlphaNumeric = false;
+            break;
+        }
+    }
+
+    if (!passDoesNotHaveAlphaNumeric) {
+        messages.push('Password should include only alphanumeric characters.');
+    }
+
+    if (passwordValue != confirmationValue) {
+        messages.push('Passwords do not match.');
+    }
+
+
     // Add alerts with a delay between them
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < messages.length; i++) {
         setTimeout(function () {
-            let alert = createAlert('is this working?');
+            let alert = createAlert(messages[i]);
             alertsContainer.appendChild(alert);
-    
+
             // Apply fade-out animation after a delay
             setTimeout(function () {
                 alert.classList.add('animate__fadeOutDown');
-            }, 4000); 
-    
+            }, 7000);
+
             // Remove the element from the DOM after the animation duration + delay
             setTimeout(function () {
                 alert.remove();
-            }, 5000); 
+            }, 8000);
         }, i * 1000); // Increase the delay for each subsequent alert
     }
-    
 
-    event.preventDefault();
+    if (messages.count > 0) {
+        event.preventDefault();
+    }
+
 });
