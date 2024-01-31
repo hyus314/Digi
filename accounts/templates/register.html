@@ -17,6 +17,12 @@ Register
 {% block main %}
 <!-- Add email to the form -->
 
+{% if message %}
+<div class="alert alert-danger">
+    {{ message }}
+</div>
+{% endif %}
+
 <form action="{% url 'register' %}" method="post">
     {% csrf_token %}
     <div class="inputs-div">
@@ -81,7 +87,7 @@ Register
         </div>
     </div>
     <div id="alert-container">
-        
+
     </div>
     <button id="submit" class="btn btn-primary" type="submit">Register</button>
 </form>
