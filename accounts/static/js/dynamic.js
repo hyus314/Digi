@@ -1,9 +1,9 @@
 let username = document.getElementById('username')
-const username_regex = /^[a-z0-9_-]{3,16}$/;
+const _username_regex = /^[a-z0-9_-]{3,16}$/;
 
 username.addEventListener('input', async function () {
     let current = document.getElementById('username').value;
-    if (current && username_regex.test(current)) {
+    if (current && _username_regex.test(current)) {
         fetch(`/accounts/register/?username=${encodeURIComponent(current)}`)
             .then(response => response.json())
             .then(data => {
@@ -11,14 +11,12 @@ username.addEventListener('input', async function () {
 
                 message.style.display = 'block';
                 if (data.exists) {
-                    console.log('User exists');
                     message.textContent = 'Username is not available.'
+                    username.style.backgroundColor = '#FF7F7F';
                     removeGreenCheck(message);
                 } else {
-                    console.log('User does not exist');
                     message.textContent = 'Username is available.'
                     addGreenCheck(message);
-                    
                 }
             })
             .catch(error => {

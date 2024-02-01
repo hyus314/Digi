@@ -26,14 +26,16 @@ def register(request):
     password = escape(request.POST.get('password'))
     confirmation = escape(request.POST.get('confirmation'))
 
+    if User.objects.filter(username=username).exists():
+        return render(request, 'register.html', {'message': 'User with that username already exists.'})
     if validate_username(username) == False:
-        return render(request, 'register.html', {'message': 'Username is not valid'})
+        return render(request, 'register.html', {'message': 'Username is not valid.'})
     if validate_names(first_name, last_name) == False:
-        return render(request, 'register.html', {'message': 'Name is not valid'})
+        return render(request, 'register.html', {'message': 'Name is not valid.'})
     if validate_password(password, confirmation) == False:
-        return render(request, 'register.html', {'message': 'Password is not valid'})
+        return render(request, 'register.html', {'message': 'Password is not valid.'})
     if validate_email(email) == False:
-        return render(request, 'register.html', {'message': 'Email is not valid'})
+        return render(request, 'register.html', {'message': 'Email is not valid.'})
 
     new_user = User.objects.create_user(username, email, password)
 

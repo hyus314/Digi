@@ -35,35 +35,39 @@ function createAlert(message) {
 }
 
 
-const username_regex = /^[a-z0-9_-]{3,16}$/
+const username_regex_ = /^[a-z0-9_-]{3,16}$/
 const name_regex = /^[a-zA-Z]+$/;
 const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-submitBtn.addEventListener('click', function (event) {
+submitBtn.addEventListener('click', async function (event) {
     let alertsContainer = document.getElementById('alert-container');
 
     let messages = [];
 
     let usernameInput = document.getElementById('username').value;
-    if (!username_regex.test(usernameInput)) {
+    let firstName = document.getElementById('first').value;
+    let lastName = document.getElementById('last').value;
+    let email = document.getElementById('email').value;
+    let passwordValue = String(document.getElementById('password').value);
+    let confirmationValue = document.getElementById('confirmation').value;
+
+    if (!usernameInput || !firstName || !lastName || !email || !passwordValue || !confirmationValue) {
+        return;
+    }
+
+    if (!username_regex_.test(usernameInput)) {
         messages.push('Username is not in correct format.')
     }
 
-    let firstName = document.getElementById('first').value;
-    let lastName = document.getElementById('last').value;
 
     if (!name_regex.test(firstName) || !name_regex.test(lastName)) {
         messages.push('Name is not in correct format.');
     }
 
-    let email = document.getElementById('email').value;
 
     if (!email_regex.test(email)) {
         messages.push('Email is not in correct format.');
     }
-
-    let passwordValue = String(document.getElementById('password').value);
-    let confirmationValue = document.getElementById('confirmation').value;
 
 
     if (passwordValue.length < 8) {
@@ -108,11 +112,24 @@ submitBtn.addEventListener('click', function (event) {
     if (!passDoesNotHaveAlphaNumeric) {
         messages.push('Password should include only alphanumeric characters.');
     }
-
+    
     if (passwordValue != confirmationValue) {
         messages.push('Passwords do not match.');
     }
+    
+    if (usernameInput) {
+        const request = await fetch(`/accounts/register/?username=${encodeURIComponent(usernameInput)}`);
 
+        if (request.ok) {
+            const data = await request.json();
+            if (data.exists) {
+                console.log('here?')
+                messages.push('User with that username exists.')
+            }
+        } else {
+            console.error('Error:', request.status);
+        }
+    }
 
     // Add alerts with a delay between them
     for (let i = 0; i < messages.length; i++) {
@@ -129,8 +146,9 @@ submitBtn.addEventListener('click', function (event) {
             setTimeout(function () {
                 alert.remove();
             }, 8000);
-        }, i * 1000); // Increase the delay for each subsequent alert
+        }, i * 1000); 
     }
+
 
     if (messages.count > 0) {
         event.preventDefault();
