@@ -51,9 +51,12 @@ submitBtn.addEventListener('click', async function (event) {
     let passwordValue = String(document.getElementById('password').value);
     let confirmationValue = document.getElementById('confirmation').value;
 
-    if (!usernameInput || !firstName || !lastName || !email || !passwordValue || !confirmationValue) {
-        return;
-    }
+    console.log(usernameInput)
+    console.log(firstName)
+    console.log(lastName)
+    console.log(email)
+    console.log(passwordValue)
+    console.log(confirmationValue)
 
     if (!username_regex_.test(usernameInput)) {
         messages.push('Username is not in correct format.')
@@ -119,12 +122,14 @@ submitBtn.addEventListener('click', async function (event) {
     
     if (usernameInput) {
         const request = await fetch(`/accounts/register/?username=${encodeURIComponent(usernameInput)}`);
-
+        console.log(request);
+        event.preventDefault();
         if (request.ok) {
             const data = await request.json();
             if (data.exists) {
                 console.log('here?')
                 messages.push('User with that username exists.')
+                event.preventDefault();
             }
         } else {
             console.error('Error:', request.status);
