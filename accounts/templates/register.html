@@ -32,8 +32,9 @@ Register
                 <input name="username" type="text" autocomplete="off" required class="form-control" id="username"
                     placeholder="digi_user">
                 <label for="floatingInput">Username</label>
-            </div>
+            </div>      
         </div>
+        <p id="exists-message" class="lead">Username is not available </p>
         <div class="line-div">
             <p class="lead">First Name:</p>
             <div class="form-floating mb-3">
@@ -93,6 +94,7 @@ Register
 </form>
 
 <script src="{% static 'js/validate.js' %}"></script>
+<script src="{% static 'js/dynamic.js' %}"></script>
 <script src="{% static 'js/submit.js' %}"></script>
 <script src="{% static 'js/csrf.js' %}"></script>
 {% endblock %}

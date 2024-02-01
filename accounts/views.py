@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
+from django.http import JsonResponse
 
 from html import escape
 
@@ -12,6 +13,10 @@ from .validations import validate_username, validate_names, validate_password, v
 @csrf_protect
 def register(request):
     if request.method == "GET":
+        if request.GET.get('username'):
+            username = request.GET.get('username')
+            user_exists = User.objects.filter(username=username).exists()
+            return JsonResponse({'exists': user_exists})
         return render(request, 'register.html')
     
     username = escape(request.POST.get('username'))
@@ -42,6 +47,7 @@ def register(request):
 
 
 @csrf_protect
+@login_required
 def login(request):
     if request.method == "GET":
         return render(request, 'login.html')
@@ -49,18 +55,21 @@ def login(request):
     username = escape(request.POST.get('username'))
     password = escape(request.POST.get('password'))
 
-    # Authenticate user
     user = authenticate(request, username=username, password=password)
 
     if user is not None:
-        # User authentication successful, log the user in
         auth_login(request, user)
-        return redirect('index')  # Redirect to the index page or any other desired page
+        return redirect('index')  
     else:
-        # Authentication failed, return login page with error message
         return render(request, 'login.html', {'message': 'Invalid username or password'})
     
 
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+def account_exists(request):
+    if request.method == "GET":
+        username = request.GET.get('username')
+        user_exists = User.objects.filter(username=username).exists()
+        return JsonResponse({'exists': user_exists})

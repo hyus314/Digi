@@ -2,7 +2,7 @@
 
 let lineDivs = document.getElementsByClassName('line-div');
 let usernameInput = document.getElementById('username');
-let regex = /^[a-z0-9_-]{3,16}$/;
+let username_regex = /^[a-z0-9_-]{3,16}$/;
 
 usernameInput.addEventListener('focus', function (event) {
     let message = document.createElement('p');
@@ -20,7 +20,7 @@ usernameInput.addEventListener('blur', clearForm);
 usernameInput.addEventListener('input', function (event) {
     let currentValue = document.getElementById('username').value;
     if (currentValue) {
-        if (regex.test(currentValue)) {
+        if (username_regex.test(currentValue)) {
             usernameInput.style.backgroundColor = '#83f28f';
         } else {
             usernameInput.style.backgroundColor = '#FF7F7F';
