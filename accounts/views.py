@@ -37,3 +37,9 @@ def register(request):
 
     messages.success(request, 'Registered successfully!')
     return redirect('index')
+
+
+def login(request):
+    breakpoint()
+    if request.method == "GET":
+        return render(request, 'login.html')
