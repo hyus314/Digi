@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 
@@ -39,7 +41,26 @@ def register(request):
     return redirect('index')
 
 
+@csrf_protect
 def login(request):
-    breakpoint()
     if request.method == "GET":
         return render(request, 'login.html')
+    
+    username = escape(request.POST.get('username'))
+    password = escape(request.POST.get('password'))
+
+    # Authenticate user
+    user = authenticate(request, username=username, password=password)
+
+    if user is not None:
+        # User authentication successful, log the user in
+        auth_login(request, user)
+        return redirect('index')  # Redirect to the index page or any other desired page
+    else:
+        # Authentication failed, return login page with error message
+        return render(request, 'login.html', {'message': 'Invalid username or password'})
+    
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')

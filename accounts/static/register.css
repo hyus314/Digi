@@ -89,7 +89,7 @@ form {
     align-items: center;
 }
 
-.alert {
+.alert.alert-primary {
     /* display: none !important; */
     background-color: #009FE3;
     width: 71%;
@@ -98,4 +98,10 @@ form {
 
 .alert>svg {
     width: 20px;
+}
+
+body > div.alert.alert-dark {
+    width: 50%;
+    align-self: center;
+    margin-top: 4em;
 }

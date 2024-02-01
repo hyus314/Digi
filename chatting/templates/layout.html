@@ -28,7 +28,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="outside-nav lead">
-                    <a class="nav-link" href="#">Home</a>
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
                 </div>
                 <ul class="navbar-nav lead justify-content-center">
                     <li class="nav-item">
@@ -45,7 +45,7 @@
                     {% if user.is_authenticated %}
                     <!-- Show additional elements for logged-in users -->
                         <a class="nav-link" href="/profile">{{ user.username }}</a>
-                        <a class="nav-link" href="/logout">Logout</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                         <a class="nav-link" href="{% url 'login' %}">Log in</a>
@@ -60,7 +60,7 @@
         <!-- Copyright -->
         <div class="text-center p-3 lead" style="background-color: rgba(0, 0, 0, 0.05);">
             © 2024 Copyright:
-            <a class="text-body" href="https://mdbootstrap.com/">Digi</a>
+            <a class="text-body" href="{% url 'index' %}">Digi</a>
         </div>
         <!-- Copyright -->
     </footer>

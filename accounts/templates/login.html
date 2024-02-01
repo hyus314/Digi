@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% load static %}
 {% block title %}
-Register
+Log in
 {% endblock %}
 
 {% block dependancies %}
@@ -18,7 +18,7 @@ Register
 <!-- Add email to the form -->
 
 {% if message %}
-<div class="alert alert-danger">
+<div class="alert alert-dark" role="alert">
     {{ message }}
 </div>
 {% endif %}
@@ -43,13 +43,11 @@ Register
             </div>
         </div>
     </div>
-    
+
 
     </div>
-    <button id="submit" class="btn btn-primary" type="submit">Register</button>
+    <button id="submit" class="btn btn-primary" type="submit">Log In</button>
 </form>
 
-<script src="{% static 'js/validate.js' %}"></script>
-<script src="{% static 'js/submit.js' %}"></script>
 <script src="{% static 'js/csrf.js' %}"></script>
 {% endblock %}
