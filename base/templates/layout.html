@@ -44,7 +44,7 @@
                 <div class="outside-nav lead">
                     {% if user.is_authenticated %}
                     <!-- Show additional elements for logged-in users -->
-                        <a class="nav-link" href="/profile">{{ user.username }}</a>
+                        <a class="nav-link" href="{% url 'profile' %}">{{ user.username }}</a>
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}
                         <a class="nav-link" href="{% url 'register' %}">Register</a>

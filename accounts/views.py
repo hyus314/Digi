@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
@@ -75,3 +75,13 @@ def account_exists(request):
         username = request.GET.get('username')
         user_exists = User.objects.filter(username=username).exists()
         return JsonResponse({'exists': user_exists})
+    
+@login_required
+def profile(request):
+    user_id = request.user.id
+    if not user_id:
+        messages.error(request, 'User id not found.')
+        return redirect('index')
+    
+    user_obj = get_object_or_404(User, pk=user_id)
+    return render(request, 'profile.html', {'user': user_obj}) 
