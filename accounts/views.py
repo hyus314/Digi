@@ -49,7 +49,6 @@ def register(request):
 
 
 @csrf_protect
-@login_required
 def login(request):
     if request.method == "GET":
         return render(request, 'login.html')
@@ -66,6 +65,7 @@ def login(request):
         return render(request, 'login.html', {'message': 'Invalid username or password'})
     
 
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('index')
