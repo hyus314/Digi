@@ -10,8 +10,8 @@ Profile
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-<link rel="stylesheet" href="{% static 'register.css' %}">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
 
 {% block main %}
@@ -24,15 +24,15 @@ Profile
 
 <div class="user-container">
     <div class="pic-block">
-        <img class="pic" src="{% static 'img/default_pic.png' %}" alt="">
+        <img src="{% static 'img/default_pic.png' %}" alt="">
     </div>
     <div class="user-info">
         <p class="title">{{ user.first_name }} {{ user.last_name }}</p>
         <div class="additional-info"> 
             <p>{{ user.username }}</p>
             <p>{{ user.email }}</p>
-            <p>{{ user.last_login }}</p>
-            <p>{{ user.date_joined }}</p>
+            <p>Last login: {{ user.last_login }}</p>
+            <p>Date joined: {{ user.date_joined }}</p>
         </div>
     </div>
 </div>

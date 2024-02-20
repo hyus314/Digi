@@ -1,0 +1,55 @@
+.user-container {
+    border: 2px solid black;
+    padding: 2em;
+    margin: 2em auto;
+    width: 70%;
+    height: 25em;
+    display: flex;
+    flex-direction: row;
+}
+
+.pic-block {
+    width: 30%;
+    background-color: #DBD3D8;
+}
+
+.pic-block>img {
+    object-fit: contain;
+    border: 2px solid black;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    padding-left: 1em;
+}
+
+.user-info>.title {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 60px;
+    flex: 1
+}
+
+.additional-info>p {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.additional-info {
+    height: inherit;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: right;
+}
