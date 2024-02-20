@@ -22,6 +22,19 @@ Profile
 </div>
 {% endif %}
 
-<div>{{ user.first_name }}</div>
+<div class="user-container">
+    <div class="pic-block">
+        <img class="pic" src="{% static 'img/default_pic.png' %}" alt="">
+    </div>
+    <div class="user-info">
+        <p class="title">{{ user.first_name }} {{ user.last_name }}</p>
+        <div class="additional-info"> 
+            <p>{{ user.username }}</p>
+            <p>{{ user.email }}</p>
+            <p>{{ user.last_login }}</p>
+            <p>{{ user.date_joined }}</p>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
