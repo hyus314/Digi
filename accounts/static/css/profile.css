@@ -29,10 +29,11 @@
 }
 
 .user-info>.title {
+    text-align: center;
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 500;
     font-style: normal;
+    font-weight: 500;
     font-size: 60px;
     flex: 1
 }
@@ -52,4 +53,42 @@
     flex-direction: column;
     justify-content: space-around;
     text-align: right;
+}
+
+.generate-token-line {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    background-color: #DBD3D8;
+    width: 100%;
+}
+
+.generate-token-line > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 70%;
+    margin: 1em auto;
+}
+
+.token-btn {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    justify-self: center;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    font-weight: 500;
+    padding: 10px 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.token-btn:hover {
+    background-color: #fff;
+    color: #000;
 }
