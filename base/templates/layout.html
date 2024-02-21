@@ -45,7 +45,7 @@
                     {% if user.is_authenticated %}
                     <!-- Show additional elements for logged-in users -->
                         <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                     {% else %}
                         <a class="nav-link" href="{% url 'register' %}">Register</a>
                         <a class="nav-link" href="{% url 'login' %}">Log in</a>
