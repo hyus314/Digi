@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from html import escape
 
 from .validations import validate_username, validate_names, validate_password, validate_email
-
+from .models import Tokens
 @csrf_protect
 def register(request):
     if request.method == "GET":
@@ -85,3 +85,30 @@ def profile(request):
     
     user_obj = get_object_or_404(User, pk=user_id)
     return render(request, 'profile.html', {'user': user_obj}) 
+
+@login_required
+def get_token(request):
+    user_id = request.user.id
+    if not user_id:
+        messages.error(request, 'User id not found.')
+        return redirect('index')
+    
+    if Tokens.token_exists_for_user(user_id):
+        token_value = Tokens.get_token_value_for_user(user_id)
+    else:
+        user = User.objects.get(pk=user_id)
+        token = Tokens(user)
+        token_value = token.token
+        token.save()
+    
+    return JsonResponse({'token': token_value})
+
+@login_required
+def token_exists(request):
+    user_id = request.user.id
+    if not user_id:
+        messages.error(request, 'User id not found.')
+        return redirect('index')
+    
+    return JsonResponse({'result': Tokens.token_exists_for_user(user_id)})
+
