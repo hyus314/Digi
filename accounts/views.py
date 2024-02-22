@@ -10,6 +10,8 @@ from html import escape
 
 from .validations import validate_username, validate_names, validate_password, validate_email
 from .models import Tokens
+
+
 @csrf_protect
 def register(request):
     if request.method == "GET":
@@ -105,10 +107,12 @@ def get_token(request):
 
 @login_required
 def token_exists(request):
-    user_id = request.user.id
-    if not user_id:
-        messages.error(request, 'User id not found.')
-        return redirect('index')
-    
-    return JsonResponse({'result': Tokens.token_exists_for_user(user_id)})
+    if request.method == "GET":
+        user_id = request.user.id
+        if not user_id:
+            messages.error(request, 'User id not found.')
+            return redirect('index')
+        
+        return JsonResponse({'result': Tokens.token_exists_for_user(user_id)})
+    return JsonResponse({'result': False})
 
