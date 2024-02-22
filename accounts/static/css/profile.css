@@ -70,6 +70,11 @@
     margin: 1em auto;
 }
 
+.disabled {
+    background-color: #59515E !important;
+    border: 2px solid #59515E;
+}
+
 .token-btn {
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
