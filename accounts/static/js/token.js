@@ -26,5 +26,12 @@ window.addEventListener('load', async function () {
 const generateButton = document.getElementsByClassName('token-btn')[0];
 
 generateButton.addEventListener('click', async function() {
-    
+    fetch('/tokens/get_token/')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    })
 });

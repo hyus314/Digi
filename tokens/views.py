@@ -6,7 +6,9 @@ from django.http import JsonResponse
 
 from .models import Tokens
 
-# Create your views here.
+import json
+import datetime
+
 @login_required
 def get_token(request):
     user_id = request.user.id
@@ -15,14 +17,14 @@ def get_token(request):
         return redirect('index')
     
     if Tokens.token_exists_for_user(user_id):
-        token_value = Tokens.get_token_value_for_user(user_id)
+        token = Tokens.get_token_value_for_user(user_id)
     else:
         user = User.objects.get(pk=user_id)
-        token = Tokens(user)
-        token_value = token.token
+        token = Tokens(user=user)
         token.save()
     
-    return JsonResponse({'token': token_value})
+    token_value = {'token_value': token.token, 'created_at': token.created_at.strftime('%Y-%m-%d %H:%M:%S')}
+    return JsonResponse({'token': json.dumps(token_value)})
 
 @login_required
 def token_exists(request):

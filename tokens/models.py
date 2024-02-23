@@ -35,5 +35,5 @@ class Tokens(models.Model):
     def get_token_value_for_user(user_id):
         token_instance = Tokens.objects.filter(user_id=user_id).first()
         if token_instance:
-            return token_instance.token
+            return token_instance
         return None
