@@ -4,7 +4,7 @@ window.addEventListener('load', async function () {
     button.disabled = true;
     button.classList.add('disabled');
 
-    fetch('token_exists/')
+    fetch('/tokens/token_exists/')
         .then(response => response.json())
         .then(data => {
             // console.log(data.result)
@@ -23,3 +23,8 @@ window.addEventListener('load', async function () {
 
 });
 
+const generateButton = document.getElementsByClassName('token-btn')[0];
+
+generateButton.addEventListener('click', async function() {
+    
+});
