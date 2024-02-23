@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
+from datetime import datetime, time
+
 import secrets
 import string
 
@@ -7,7 +11,7 @@ class Tokens(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=9)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,15 +21,19 @@ class Tokens(models.Model):
     def __str__(self):
         return f"Token: {self.token} - Created At: {self.created_at}"
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, day=None, hours=None, minutes=None, **kwargs):
+        if hours is not None and minutes is not None:
+            current_datetime = datetime.now().replace(day=day, hour=hours, minute=minutes, second=0, microsecond=0)
+            self.created_at = current_datetime
+    
         super().save(*args, **kwargs)
-            
+    
     def generate_unique_token(self):
         alphabet = string.ascii_letters + string.digits
         while True:
             token = 'DG' + ''.join(secrets.choice(alphabet) for _ in range(6)) + 'X'
             if not Tokens.objects.filter(token=token).exists():
-                return token.upper()
+                return token
 
     @staticmethod
     def token_exists_for_user(user_id):
