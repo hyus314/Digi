@@ -21,9 +21,9 @@ class Tokens(models.Model):
     def __str__(self):
         return f"Token: {self.token} - Created At: {self.created_at}"
 
-    def save(self, *args, day=None, hours=None, minutes=None, **kwargs):
-        if hours is not None and minutes is not None:
-            current_datetime = datetime.now().replace(day=day, hour=hours, minute=minutes, second=0, microsecond=0)
+    def save(self, *args, day=None, hours=None, minutes=None, seconds=None, **kwargs):
+        if day is not None and hours is not None and minutes is not None and seconds is not None:
+            current_datetime = datetime.now().replace(day=day, hour=hours, minute=minutes, second=seconds, microsecond=0)
             self.created_at = current_datetime
     
         super().save(*args, **kwargs)

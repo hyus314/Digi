@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 
 from .models import Tokens
+from .validations import validate_input
 
 import json
 import datetime
@@ -22,12 +23,20 @@ def get_token(request):
         token = Tokens.get_token_value_for_user(user_id)
     else:
         data = json.loads(request.body)
+        validation_errors = validate_input(data)
+        if validation_errors:
+            for error in validation_errors:
+                messages.error(request, error)
+            return redirect('index')
+        print(data)
+        breakpoint()
         day = int(data.get('day'))
         hours = int(data.get('hours'))
         minutes = int(data.get('minutes'))
+        seconds = int(data.get('seconds'))
         user = User.objects.get(pk=user_id)
         token = Tokens(user=user)
-        token.save(day=day, hours=hours, minutes=minutes)
+        token.save(day=day, hours=hours, minutes=minutes, seconds=seconds)
     
     token_value = {'token_value': token.token, 'created_at': token.created_at.strftime('%Y-%m-%d %H:%M:%S')}
     return JsonResponse({'token': json.dumps(token_value)})

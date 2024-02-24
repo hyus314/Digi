@@ -30,12 +30,12 @@ generateButton.addEventListener('click', async function() {
     let date = new Date();
     
     let days = String(date.getDate());
-    console.log(days);
     let hours = String(date.getHours());
     let minutes = String(date.getMinutes());
+    let seconds = String(date.getSeconds());
     
-    let bodyData = JSON.stringify({'hours': hours, 'minutes': minutes, 'day': days});
-
+    let bodyData = JSON.stringify({'hours': hours, 'minutes': minutes, 'day': days, 'seconds': seconds});
+    
     const csrf = getCookie('csrftoken');
 
     fetch('/tokens/get_token/', {
