@@ -38,8 +38,7 @@ def get_token(request):
         token = Tokens(user=user)
         token.save(day=day, hours=hours, minutes=minutes, seconds=seconds)
     
-    token_value = {'token_value': token.token, 'created_at': token.created_at.strftime('%Y-%m-%d %H:%M:%S')}
-    return JsonResponse({'token': json.dumps(token_value)})
+    return JsonResponse({'token_value': token.token, 'created_at': token.created_at.strftime('%Y-%m-%d %H:%M:%S')})
 
 @login_required
 def token_exists(request):

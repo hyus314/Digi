@@ -13,7 +13,7 @@ window.addEventListener('load', async function () {
             if (data.result === false) {
                 button.innerHTML = 'generate chat token'
             } else {
-                button.innerHTML = 'view chat token' 
+                button.innerHTML = 'view chat token'
             }
 
         })
@@ -26,16 +26,16 @@ window.addEventListener('load', async function () {
 const generateButton = document.getElementsByClassName('token-btn')[0];
 
 
-generateButton.addEventListener('click', async function() {
+generateButton.addEventListener('click', async function () {
     let date = new Date();
-    
+
     let days = String(date.getDate());
     let hours = String(date.getHours());
     let minutes = String(date.getMinutes());
     let seconds = String(date.getSeconds());
-    
-    let bodyData = JSON.stringify({'hours': hours, 'minutes': minutes, 'day': days, 'seconds': seconds});
-    
+
+    let bodyData = JSON.stringify({ 'hours': hours, 'minutes': minutes, 'day': days, 'seconds': seconds });
+
     const csrf = getCookie('csrftoken');
 
     fetch('/tokens/get_token/', {
@@ -46,13 +46,23 @@ generateButton.addEventListener('click', async function() {
             'X-CSRFToken': csrf
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            let tokenText = document.getElementById('token');
+            tokenText.innerHTML = data.token_value;
+            let tokenRow = document.getElementsByClassName('token-row')[0];
+            if (!tokenRow.querySelector('button')) {
+
+                let button = document.createElement('button');
+                button.classList.add('material-symbols-outlined');
+                button.innerHTML = 'content_copy';
+                tokenRow.appendChild(button);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        })
 });
 
 function getCookie(name) {
@@ -74,7 +84,7 @@ function getCookie(name) {
 let csrftoken = getCookie('csrftoken');
 
 $.ajaxSetup({
-    beforeSend: function(xhr, settings) {
+    beforeSend: function (xhr, settings) {
         if (!this.crossDomain) {
             xhr.setRequestHeader("X-CSRFToken", csrftoken);
         }
