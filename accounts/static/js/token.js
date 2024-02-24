@@ -1,4 +1,7 @@
 window.addEventListener('load', async function () {
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
     const button = document.querySelector('.token-btn');
     button.innerHTML = 'loading'
     button.disabled = true;
@@ -48,21 +51,37 @@ generateButton.addEventListener('click', async function () {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             let tokenText = document.getElementById('token');
             tokenText.innerHTML = data.token_value;
             let tokenRow = document.getElementsByClassName('token-row')[0];
             if (!tokenRow.querySelector('button')) {
 
                 let button = document.createElement('button');
+                
                 button.classList.add('material-symbols-outlined');
                 button.innerHTML = 'content_copy';
+
+                button.classList.add('d-inline-block');
+                button.setAttribute('tabindex', '0');
+                button.setAttribute('type', 'button');
+                button.setAttribute('data-bs-container', 'body');
+                button.setAttribute('data-bs-toggle', 'popover');
+                button.setAttribute('data-bs-placement', 'top');
+                button.setAttribute('data-bs-content', 'Top popover');
                 tokenRow.appendChild(button);
+                button.addEventListener('click', function () {
+                    console.log('clicked');
+                })
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-        })
+            let tokenText = document.getElementById('token');
+            tokenText.innerHTML = 'There was an error loading your token.';
+            return;
+        });
+
+
 });
 
 function getCookie(name) {
