@@ -51,29 +51,12 @@ generateButton.addEventListener('click', async function () {
     })
         .then(response => response.json())
         .then(data => {
-            // console.log(data);
-            let tokenText = document.getElementById('token');
-            tokenText.innerHTML = data.token_value;
-            let tokenRow = document.getElementsByClassName('token-row')[0];
-            if (!tokenRow.querySelector('button')) {
-
-                let button = document.createElement('button');
-                
-                button.classList.add('material-symbols-outlined');
-                button.innerHTML = 'content_copy';
-
-                button.classList.add('d-inline-block');
-                button.setAttribute('tabindex', '0');
-                button.setAttribute('type', 'button');
-                button.setAttribute('data-bs-container', 'body');
-                button.setAttribute('data-bs-toggle', 'popover');
-                button.setAttribute('data-bs-placement', 'top');
-                button.setAttribute('data-bs-content', 'Top popover');
-                tokenRow.appendChild(button);
-                button.addEventListener('click', function () {
-                    console.log('clicked');
-                })
-            }
+            populate(data);
+            let copyButton = document.querySelector('#tokenModal > div > div > div.modal-body > div > button');
+            copyButton.addEventListener('click', function () {
+                let tokenText = document.getElementById('token').innerHTML;
+                console.log(tokenText);
+            });
         })
         .catch(error => {
             let tokenText = document.getElementById('token');
@@ -83,6 +66,44 @@ generateButton.addEventListener('click', async function () {
 
 
 });
+
+function populate(data) {
+    // console.log(data);
+    let tokenText = document.getElementById('token');
+    tokenText.innerHTML = data.token_value;
+    let tokenRow = document.getElementsByClassName('token-row')[0];
+    if (!tokenRow.querySelector('button')) {
+        createCopyButton(tokenRow);
+
+    }
+}
+
+function createCopyButton(tokenRow) {
+    let button = document.createElement('button');
+    button.classList.add('material-symbols-outlined');
+    button.innerHTML = 'content_copy';
+
+    button.classList.add('d-inline-block');
+    button.setAttribute('type', 'button');
+    button.setAttribute('data-bs-container', 'body');
+    button.setAttribute('data-bs-toggle', 'popover');
+    button.setAttribute('data-bs-placement', 'top');
+    button.setAttribute('data-bs-trigger', 'hover');
+    button.setAttribute('data-bs-content', 'Copy Token');
+    button.setAttribute('data-bs-html', 'true');
+
+    tokenRow.appendChild(button);
+
+    let popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    let popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl, {
+            content: 'Copy Token',
+            placement: 'top',
+            html: true
+        });
+    });
+
+}
 
 function getCookie(name) {
     let cookieValue = null;
