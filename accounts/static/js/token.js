@@ -1,7 +1,4 @@
 window.addEventListener('load', async function () {
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-
     const button = document.querySelector('.token-btn');
     button.innerHTML = 'loading'
     button.disabled = true;
@@ -54,8 +51,10 @@ generateButton.addEventListener('click', async function () {
             populate(data);
             let copyButton = document.querySelector('#tokenModal > div > div > div.modal-body > div > button');
             copyButton.addEventListener('click', function () {
-                let tokenText = document.getElementById('token').innerHTML;
-                console.log(tokenText);
+                let tokenText = document.getElementById('token');
+                let textToCopy = tokenText.textContent;
+
+                navigator.clipboard.writeText(textToCopy);
             });
         })
         .catch(error => {
@@ -88,8 +87,8 @@ function createCopyButton(tokenRow) {
     button.setAttribute('data-bs-container', 'body');
     button.setAttribute('data-bs-toggle', 'popover');
     button.setAttribute('data-bs-placement', 'top');
-    button.setAttribute('data-bs-trigger', 'hover');
     button.setAttribute('data-bs-content', 'Copy Token');
+    button.setAttribute('data-bs-trigger', 'hover');
     button.setAttribute('data-bs-html', 'true');
 
     tokenRow.appendChild(button);
