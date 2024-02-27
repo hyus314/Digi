@@ -122,6 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost'
+CELERY_RESULT_BACKEND = 'django-db'
+
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 # Default primary key field type
