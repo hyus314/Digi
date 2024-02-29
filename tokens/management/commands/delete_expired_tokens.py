@@ -10,10 +10,17 @@ class Command(BaseCommand):
     help = 'Delete expired tokens'
 
     def handle(self, *args, **options):
+        # Get the current time
         current_time = timezone.now()
-        fifteen_minutes_ago = current_time - timezone.timedelta(minutes=15)
 
-        expired_tokens = Tokens.objects.filter(created_at__lte=fifteen_minutes_ago)
-        num_deleted, _ = expired_tokens.delete()
+        # Iterate through each token
+        for token in Tokens.objects.all():
+            # Calculate the expiration time for the token using the offset
+            expiration_time = token.created_at + timezone.timedelta(minutes=token.offset)
+            
+            # Check if 15 minutes have passed since creation based on the expiration time
+            if current_time >= expiration_time + timezone.timedelta(minutes=15):
+                # Delete the token
+                token.delete()
 
-        self.stdout.write(self.style.SUCCESS(f'{num_deleted} expired tokens deleted successfully'))
+        self.stdout.write(self.style.SUCCESS('Expired tokens deleted successfully'))
