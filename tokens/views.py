@@ -29,7 +29,6 @@ def get_token(request):
                 messages.error(request, error)
             return redirect('index')
         print(data)
-        breakpoint()
         day = int(data.get('day'))
         hours = int(data.get('hours'))
         minutes = int(data.get('minutes'))
