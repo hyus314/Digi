@@ -12,6 +12,7 @@ class Tokens(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=9)
     created_at = models.DateTimeField()
+    offset = models.IntegerField(default=0)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,10 +22,11 @@ class Tokens(models.Model):
     def __str__(self):
         return f"Token: {self.token} - Created At: {self.created_at}"
 
-    def save(self, *args, day=None, hours=None, minutes=None, seconds=None, **kwargs):
+    def save(self, *args, day=None, hours=None, minutes=None, seconds=None,offset=0, **kwargs):
         if day is not None and hours is not None and minutes is not None and seconds is not None:
             current_datetime = datetime.now().replace(day=day, hour=hours, minute=minutes, second=seconds, microsecond=0)
             self.created_at = current_datetime
+            self.offset = offset
     
         super().save(*args, **kwargs)
     

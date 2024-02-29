@@ -33,9 +33,10 @@ def get_token(request):
         hours = int(data.get('hours'))
         minutes = int(data.get('minutes'))
         seconds = int(data.get('seconds'))
+        offset = int(data.get('offset'))
         user = User.objects.get(pk=user_id)
         token = Tokens(user=user)
-        token.save(day=day, hours=hours, minutes=minutes, seconds=seconds)
+        token.save(day=day, hours=hours, minutes=minutes, seconds=seconds, offset=offset)
     
     return JsonResponse({'token_value': token.token, 'created_at': token.created_at.strftime('%Y-%m-%d %H:%M:%S')})
 
@@ -50,3 +51,12 @@ def token_exists(request):
         return JsonResponse({'result': Tokens.token_exists_for_user(user_id)})
     return JsonResponse({'result': False})
 
+@login_required
+def set_timezone(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        timezone_offset = data.get('timezone_offset')
+        return JsonResponse({'message': 'Timezone set successfully'})
+    else:
+        # Return an error response if the request method is not POST
+        return JsonResponse({'message': 'Invalid request method'}, status=400)

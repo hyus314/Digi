@@ -33,8 +33,8 @@ generateButton.addEventListener('click', async function () {
     let hours = String(date.getHours());
     let minutes = String(date.getMinutes());
     let seconds = String(date.getSeconds());
-
-    let bodyData = JSON.stringify({ 'hours': hours, 'minutes': minutes, 'day': days, 'seconds': seconds });
+    let offset = String(date.getTimezoneOffset());
+    let bodyData = JSON.stringify({ 'hours': hours, 'minutes': minutes, 'day': days, 'seconds': seconds, 'offset': offset });
 
     const csrf = getCookie('csrftoken');
 
