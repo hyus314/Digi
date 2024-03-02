@@ -77,15 +77,34 @@ WSGI_APPLICATION = 'main.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "mssql",
-        "NAME": "Digi",
-        "HOST": "DESKTOP-LOT7J7V\\SQLEXPRESS",
-        "TRUSTED_CONNECTION": "yes",
-        "OPTIONS": {
-            "driver": "ODBC Driver 17 for SQL Server", 
-        },
-    },
+    # "default": {
+    #     "ENGINE": "mssql",
+    #     "NAME": "Digi",
+    #     "HOST": "DESKTOP-LOT7J7V\\SQLEXPRESS",
+    #     "TRUSTED_CONNECTION": "yes",
+    #     "OPTIONS": {
+    #         "driver": "ODBC Driver 17 for SQL Server", 
+    #     },
+    # },
+    # "default": {
+    #     "ENGINE": "sql_server.pyodbc",
+    #     "NAME": "Digi",
+    #     "HOST": "localhost",  # Use localhost to connect to the SQL Server running in the Docker container
+    #     "PORT": "1433",  # Default SQL Server port
+    #     "USER": "sa",  # SQL Server default user
+    #     "PASSWORD": "StrongDigiPassword123",  # Password you set when running the SQL Server container
+    #     "OPTIONS": {
+    #         "driver": "ODBC Driver 17 for SQL Server",
+    #     },
+    # },
+     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Digi', 
+        'USER': 'user', 
+        'PASSWORD': 'DigiPassword12',  
+        'HOST': '127.0.0.1',  
+        'PORT': '3306',  
+    }
 }
 
 # Password validation

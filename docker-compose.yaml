@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'Digi'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'DigiPassword12'
+      MYSQL_ROOT_PASSWORD: 'rootPassword' 
+    ports:
+      - "3306:3306"

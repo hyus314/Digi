@@ -1,0 +1,45 @@
+I initialized a connection from a Ubuntu Linux virtual machine to the database in order to execute Linux cronological job commands.
+Here's how it was done:
+1. I implemented the Python Virtual Environment.
+    The path to the downloaded dependencies is "venv/bin/activate". I accessed it through the Bash CLI with the "source" command like this:
+     "source venv/bin/activate".
+     This way I did not have to install any dependencies on the running Linux Ubuntu VM, I installed them directly in the "venv/bin/activate" path instead.
+     Of course that was done using pip, I had to install pip on the Virtual Machine, though.
+
+     sudo apt update
+     sudo apt install build-essential pkg-config
+     sudo apt install python3-dev libmysqlclient-dev
+     pip install mysqlclient
+
+     These four lines of linux commands created the assurance of finally being able to run the web application, but we do not have connection to the database yet.
+     The next step thoroughly explains how to do so.
+2. I used Docker.
+    In order to have the Linux Ubuntu Virtual Machine also be able to run the web application successfully, I had to initialize a connection through the database as well. 
+        Let's firstly dive into the root of the problem.
+        I had a running SQL Instance in the array of background processes of my PC, why did I not use that? 
+        Obviously, it did not work.
+        For a couple of reasons: 
+            2.1 I had to install a lot of dependencies in order to have the connection between the application and sql instance.
+                Of course that was done with ups and downs on Windows, It would've been even worse using Linux.
+            2.2 I had to have an SQL Instance running in the background processes of the Linux VM. How was I supposed to do that?
+            2.3 I had to change the DATABASE variable in the settings.py, so it would work both on my PC and the Linux VM. Which was also not a healthy option.
+            Docker hit these three birds (solved those problems) with one stone (with it's functionality) 
+    Anyway here's how it was done:
+        I installed the MySQL image. Wait, why did I not use MSSQL instead? Well, because Django does not have a direct dependency with MSSQL, but it does so with MySQL.
+        Yes I slightly changed the database instance in order to solve this problem. 
+        More details of how I solved all of those problems I had lined up a bit earlier:
+            1 -> I installed the mysql image with 
+
+                    "docker pull mysql:latest" 
+                
+                command
+            2 -> I introduced the docker-compose.yaml file, which is used to run containers from installed images. 
+                I ran that container using
+
+                    "docker-compose up -d"
+                
+                So far, so good. The database instance is up and running.
+            3 -> I changed the DATABASES variable in the settings.py so that the application can connect to the mysql instance.
+        After all of these steps, both the Windows OS and the Linux Ubuntu VM can see the Database with the help of Docker.
+        That means we can currently run the application from the Linux Ubuntu CLI and the Bash CLI. What's better is we can finally introduce Linux commands on the running Web Application.
+        
