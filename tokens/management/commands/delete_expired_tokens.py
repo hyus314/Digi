@@ -18,7 +18,7 @@ class Command(BaseCommand):
             expiration_time = token.created_at + timezone.timedelta(minutes=token.offset)
             
             # Check if 15 minutes have passed since creation based on the expiration time
-            if current_time >= expiration_time + timezone.timedelta(minutes=1):
+            if current_time >= expiration_time + timezone.timedelta(minutes=15):
                 # Delete the token
                 token.delete()
 

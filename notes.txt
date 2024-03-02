@@ -40,6 +40,26 @@ Here's how it was done:
                 
                 So far, so good. The database instance is up and running.
             3 -> I changed the DATABASES variable in the settings.py so that the application can connect to the mysql instance.
+
         After all of these steps, both the Windows OS and the Linux Ubuntu VM can see the Database with the help of Docker.
         That means we can currently run the application from the Linux Ubuntu CLI and the Bash CLI. What's better is we can finally introduce Linux commands on the running Web Application.
+3. Created a custom cronological deamon running in the background.
+    Final step of implementing this functionality was to actually run the delete_expired_tokens.py file every couple of minutes. It is located in the tokens app directory, management/commands folder.
+    I am not going to dive in to the attempts (there were many) of how I tried to implement this.
+    Here is the solution and some needed explanations.
+
+        Background daemon working on a Cronological Task. I do not like calling it a cronjob.
+            
+            "Daemon" is a background "digital worker", sounds superhuman, here is the documentation of why it is called like that: https://en.wikipedia.org/wiki/Daemon_(computing) (quite interesting)
+            So this "digital worker" has to do a "task" every couple of minutes, or it depends on how you set it through Linux Ubuntu's command: 
+                "crontab -e"
+            more on it here: https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
+
+        So the delete_expired_tokens.py file does exactly what it's name says, deletes expired tokens.
         
+            So we configure the Daemon to execute that delete_expired_tokens.py file every 3 minutes through this cronological job:
+            "*/3 * * * * /mnt/c/MyPrograms/Projects/Digi/project/run_cron.sh" 
+            run_cron.sh is a file, composed of consecutive Linux Commands, that very firstly checks if we have mysqlclient installed, because I was getting an error that I did not have it installed.
+            Installs it if needed and proceeds to execute delete_expired_tokens.py and finally prints the output to the log.txt file.
+
+        In other words we have successfully employed a "digital robot worker" to delete our expired tokens in the database. 
