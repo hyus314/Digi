@@ -60,3 +60,19 @@ def set_timezone(request):
     else:
         # Return an error response if the request method is not POST
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+    
+
+def check_token(request):
+    if request.method == "POST":
+        token_data = json.loads(request.body)
+        token_value = token_data.get('token')
+        try:
+            token_object = Tokens.objects.get(token=token_value)
+            
+            # Token exists
+            return JsonResponse({'message': 'yes'})
+        except Tokens.DoesNotExist:
+            # Token does not exist
+            return JsonResponse({'message': 'no'})
+    else:
+        return JsonResponse({'message': 'does not exist'}, status=404)
