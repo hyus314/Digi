@@ -11,14 +11,14 @@
 {% block main %}
   <div class="input-token-div">
     <div class="enter-line">
-      <p>Enter valid token:</p>
-      <input id="input" type="text">
+      <p>Enter chat token:</p>
+      <input maxlength="9" id="input" type="text">
     </div>
     <div class="token-result">
       <p></p>
     </div>
     <div class="button-div">
-      <button>Connect</button>
+      <button class="disabled">Connect</button>
     </div>
   </div>
   <script src="{% static 'js/token-input.js' %}"></script>

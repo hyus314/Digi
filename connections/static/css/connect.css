@@ -2,22 +2,24 @@
     border: 2px solid black;
     margin: 2em auto;
     width: 70%;
-    height: 25em;
+    height: 30em;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
 }
 
 .enter-line {
-    padding: 5em 2em;
+    padding-inline: 2em;
     display: flex;
     flex-direction: row;
     height: 4em;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    flex: 2;
 }
 
-.enter-line > p {
+.enter-line>p {
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -27,7 +29,7 @@
     padding-top: 10px;
 }
 
-.enter-line > input {
+.enter-line>input {
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -36,36 +38,66 @@
 }
 
 .token-result {
-    background-color: black;
-    height: 50%;
+    flex: 5;
     width: 100%;
-    margin-top: auto;
-    justify-self: flex-end;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    background-color: black;
+    transition: all 0.2s ease-out;
 }
 
-.token-result > p {
+.token-result>p {
     font-family: "Kode Mono", monospace;
     /* font-optical-sizing: auto; */
     font-weight: 400;
     letter-spacing: 3px;
     font-style: normal;
-    font-size: 70px;
+    font-size: 100px;
     color: white;
 }
 
 .button-div {
+    flex: 2;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-block: 1em;
 }
 
-.button-div {
-    
+.button-div>button {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    justify-self: center;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-div>button:hover{
+    background-color: #fff;
+    color: #000;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.disabled:hover {
+    opacity: 0.75;
+    cursor: not-allowed;
+    background-color: #000 !important;
+    color: white !important;
 }
