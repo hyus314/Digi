@@ -1,0 +1,71 @@
+.input-token-div {
+    border: 2px solid black;
+    margin: 2em auto;
+    width: 70%;
+    height: 25em;
+    display: flex;
+    flex-direction: column;
+}
+
+.enter-line {
+    padding: 5em 2em;
+    display: flex;
+    flex-direction: row;
+    height: 4em;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.enter-line > p {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 57px;
+    color: black;
+    padding-top: 10px;
+}
+
+.enter-line > input {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    width: 40%;
+    font-size: 2em;
+}
+
+.token-result {
+    background-color: black;
+    height: 50%;
+    width: 100%;
+    margin-top: auto;
+    justify-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.token-result > p {
+    font-family: "Kode Mono", monospace;
+    /* font-optical-sizing: auto; */
+    font-weight: 400;
+    letter-spacing: 3px;
+    font-style: normal;
+    font-size: 70px;
+    color: white;
+}
+
+.button-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-block: 1em;
+}
+
+.button-div {
+    
+}

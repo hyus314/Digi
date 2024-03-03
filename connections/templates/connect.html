@@ -1,16 +1,25 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
 {% load static %}
 {% block title %}
-Home
+  Connect
 {% endblock %}
 {% block dependancies %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@700&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
-  rel="stylesheet">
-
+  <link rel="stylesheet" href="{% static "css/connect.css" %}">
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
 {% endblock %}
 {% block main %}
-
+  <div class="input-token-div">
+    <div class="enter-line">
+      <p>Enter valid token:</p>
+      <input id="input" type="text">
+    </div>
+    <div class="token-result">
+      <p></p>
+    </div>
+    <div class="button-div">
+      <button>Connect</button>
+    </div>
+  </div>
+  <script src="{% static 'js/token-input.js' %}"></script>
 {% endblock %}
