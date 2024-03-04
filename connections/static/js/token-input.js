@@ -5,7 +5,7 @@ input.addEventListener('input', async function () {
     const value = input.value
     let csrftoken = getCookie('csrftoken');
     slice(value);
-    let tokenDiv = document.querySelector('.token-result');
+    let tokenDiv = document.querySelector('.token-result-div');
     let button = document.querySelector('.button-div>button');
     button.disabled = true;
     if (pattern.test(value)) {
@@ -18,30 +18,36 @@ input.addEventListener('input', async function () {
             body: JSON.stringify({ token: value }),
         }).then(response => response.json())
             .then(data => {
-                console.log(data.message)
+                let tokenMessage = document.querySelector('#tokenMessage');
                 if (data.message === 'yes') {
                     tokenDiv.style.backgroundColor = '#1B5E20';
-                    if (button.classList.contains('disabled')){
+                    if (button.classList.contains('disabled')) {
                         button.classList.remove('disabled');
                         button.disabled = false;
                     }
+                    tokenMessage.innerHTML = `This is ${data.user}'s token`;
                 } else if (data.message === 'no') {
                     tokenDiv.style.backgroundColor = '#B71C1C';
-                    if (!button.classList.contains('disabled')){
+                    if (!button.classList.contains('disabled')) {
                         button.classList.add('disabled');
                         button.disabled = true;
+                    }
+                    if (data.user === 'user is the same') {
+                        tokenDiv.style.backgroundColor = 'black';
+                        tokenMessage.innerHTML = `You cannot connect with yourself.`;
                     }
                 }
             });
     } else {
         tokenDiv.style.backgroundColor = 'black';
-        if (!button.classList.contains('disabled')){
+        if (!button.classList.contains('disabled')) {
             button.classList.add('disabled');
             button.disabled = true;
         }
+        tokenMessage.innerHTML = '';
     }
     // console.log(value);
-    let result = document.querySelector('.token-result>p');
+    let result = document.querySelector('#tokenValue');
     result.innerHTML = value;
 });
 
