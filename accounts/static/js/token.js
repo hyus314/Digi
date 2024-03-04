@@ -56,6 +56,7 @@ generateButton.addEventListener('click', async function () {
 
                 navigator.clipboard.writeText(textToCopy);
             });
+            generateButton.innerHTML = 'view chat token';
         })
         .catch(error => {
             let tokenText = document.getElementById('token');
