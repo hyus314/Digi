@@ -12,13 +12,12 @@ from .helpers import sanitize_token, calculate_minutes_passed
 @csrf_protect
 def connect(request):
     if request.method == 'GET':
-        print('get')
         return render(request, 'connect.html')
     elif request.method == 'POST':
         token = sanitize_token(request.POST.get('token'))
         token_obj = Tokens.objects.get(token=token)
-        print('here')
-        if not token_obj or calculate_minutes_passed(token=token_obj) >= 15:
+        
+        if not token_obj or calculate_minutes_passed(token=token_obj) == True:
             if token_obj:
                 token_obj.delete()
             messages.error(request, 'Invalid token')
@@ -26,7 +25,6 @@ def connect(request):
         
         return redirect('my_connections')
     else:
-        print('else')
         messages.error(request, 'Invalid method')
         return redirect('index')
     

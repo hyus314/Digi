@@ -10,10 +10,11 @@ def sanitize_token(token):
 def calculate_minutes_passed(token):
     current_utc_time = timezone.now()
 
-    time_difference = current_utc_time - token.created_at
-
-    time_difference_with_offset = time_difference + timedelta(minutes=token.offset)
-
-    minutes_passed = time_difference_with_offset.total_seconds() / 60
-
-    return minutes_passed
+    time_token_created = token.created_at + timedelta(minutes=token.offset)
+    
+    if current_utc_time >= time_token_created + timezone.timedelta(minutes=15):
+        return True
+    
+    return False
+    breakpoint()
+    
