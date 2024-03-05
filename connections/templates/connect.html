@@ -10,12 +10,12 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {% endblock %}
 {% block main %}
-  <form action="{% url 'my_connections' %}" method="post">
+  <form action="{% url 'connect' %}" method="post">
     {% csrf_token %}
     <div class="input-token-div">
       <div class="enter-line">
         <p>Enter chat token:</p>
-        <input maxlength="9" id="input" autocomplete="off" autofocus="one" type="text" />
+        <input name="token" maxlength="9" id="input" autocomplete="off" autofocus="one" type="text" />
       </div>
       <div class="token-result-div">
         <p id="tokenValue"></p>
