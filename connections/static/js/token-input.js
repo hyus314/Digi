@@ -25,13 +25,14 @@ input.addEventListener('input', async function () {
                         button.classList.remove('disabled');
                         button.disabled = false;
                     }
-                    tokenMessage.innerHTML = `This is ${data.user}'s token`;
+                    tokenMessage.innerHTML = `This is ${data.user}'s token.`;
                 } else if (data.message === 'no') {
                     tokenDiv.style.backgroundColor = '#B71C1C';
                     if (!button.classList.contains('disabled')) {
                         button.classList.add('disabled');
                         button.disabled = true;
                     }
+                    tokenMessage.innerHTML = `This token is not valid.`;
                     if (data.user === 'user is the same') {
                         tokenDiv.style.backgroundColor = 'black';
                         tokenMessage.innerHTML = `You cannot connect with yourself.`;

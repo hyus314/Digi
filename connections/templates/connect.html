@@ -4,24 +4,27 @@
   Connect
 {% endblock %}
 {% block dependancies %}
-  <link rel="stylesheet" href="{% static "css/connect.css" %}">
-  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/connect.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {% endblock %}
 {% block main %}
-  <div class="input-token-div">
-    <div class="enter-line">
-      <p>Enter chat token:</p>
-      <input maxlength="9" id="input" type="text">
+  <form action="{% url 'my_connections' %}" method="post">
+    {% csrf_token %}
+    <div class="input-token-div">
+      <div class="enter-line">
+        <p>Enter chat token:</p>
+        <input maxlength="9" id="input" autocomplete="off" autofocus="one" type="text" />
+      </div>
+      <div class="token-result-div">
+        <p id="tokenValue"></p>
+        <p id="tokenMessage"></p>
+      </div>
+      <div class="button-div">
+        <button type="submit" class="disabled">Connect</button>
+      </div>
     </div>
-    <div class="token-result-div">
-      <p id="tokenValue"></p>
-      <p id="tokenMessage"></p>
-    </div>
-    <div class="button-div">
-      <button class="disabled">Connect</button>
-    </div>
-  </div>
+  </form>
   <script src="{% static 'js/token-input.js' %}"></script>
 {% endblock %}
