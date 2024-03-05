@@ -23,6 +23,16 @@ def connect(request):
             messages.error(request, 'Invalid token')
             return redirect('index')
         
+        user_one = User.objects.get(pk=request.user.id)
+        user_two = token_obj.user
+        try:
+            connection = Connection(user_one=user_one, user_two=user_two)
+            connection.save()
+        except ValueError as e:
+            messages.error(request, str(e))
+            return redirect('index')
+        token_obj.delete()
+        messages.success(request, f'Successfully connected with {user_two.username}')
         return redirect('my_connections')
     else:
         messages.error(request, 'Invalid method')
@@ -32,3 +42,7 @@ def connect(request):
 def my_connections(request):
     user_obj = get_object_or_404(User, pk=request.user.id)
     return render(request, 'my_connections.html', {'user': user_obj}) 
+
+@login_required
+def options(request):
+    return render(request, 'connections.html')
