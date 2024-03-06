@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-auto-rows: 1fr;
-    background-color: blue;
     gap: 3em;
     width: 90%;
     margin: 0 auto;
@@ -10,13 +9,56 @@
 }
 
 .connection-card {
-
-    background-color: yellow;
     width: 100%;
     height: 23em;
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+    border: 2px solid black;
+    background-color: #FAF9F6;
+}
+
+.add-connection-container {
+    border: 2px solid black;
+    background-color: #FAF9F6;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-connection-container>a {
+    color: white;
+    text-decoration: none;
+    padding: 1em;
+    border-radius: 33%;
+    border: 1px solid black;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: all 0.2s ease;
+    background-color: black;
+}
+
+.add-connection-container>a:hover {
+    background-color: #008000;
+    border: 1px solid #008000;
+    color: white;
+}
+
+.add-connection-container>a>span {
+    font-size: 45px;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    height: 85%;
 }
 
 .card-header {
@@ -29,13 +71,14 @@
     align-items: center;
     font-size: 20px;
     letter-spacing: 1px;
+    height: 15%;
 }
 
 .user-info {
     display: flex;
     flex-direction: row;
     width: 100%;
-    padding: 1em;
+    flex: 2;
 }
 
 .user-full-name-div {
@@ -47,7 +90,7 @@
     color: black;
 }
 
-.user-full-name-div > p {
+.user-full-name-div>p {
     margin: 0;
 }
 
@@ -62,4 +105,36 @@
     width: 100%;
     height: 100%;
     display: block;
+}
+
+.message-container {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.message-container p {
+    margin: 0;
+}
+
+.message {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    padding: 0.5em 1em;
+    background-color: white;
+    border: 1px solid black;
+    font-family: "Barlow", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    margin-block: 0.5em;
+}
+
+.message p:nth-child(2) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
 }

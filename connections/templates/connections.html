@@ -1,12 +1,13 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block title %}
-  Connection Options
+  Connections - {{ user.username }}
 {% endblock %}
 {% block dependancies %}
   <link rel="stylesheet" href="{% static 'css/options.css' %}" />
-  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {% endblock %}
 {% block main %}
@@ -33,9 +34,14 @@
           <p>
             Last Message:
           </p>
-          <p>
-            You: Yes I can fulfill the request.
-          </p>
+          <div class="message">
+            <p>
+              You:
+            </p>
+            <p>
+              Yes I can fulfill the request.
+            </p>
+          </div>
           <p>
             WED 6 Mar 16:32
           </p>
@@ -64,9 +70,14 @@
           <p>
             Last Message:
           </p>
-          <p>
-            You: Yes I can fulfill the request.
-          </p>
+          <div class="message">
+            <p>
+              You:
+            </p>
+            <p>
+              Yes I can fulfill the request.
+            </p>
+          </div>
           <p>
             WED 6 Mar 16:32
           </p>
@@ -95,9 +106,14 @@
           <p>
             Last Message:
           </p>
-          <p>
-            You: Yes I can fulfill the request.
-          </p>
+          <div class="message">
+            <p>
+              You:
+            </p>
+            <p>
+              Yes I can fulfill the request.
+            </p>
+          </div>
           <p>
             WED 6 Mar 16:32
           </p>
@@ -126,9 +142,14 @@
           <p>
             Last Message:
           </p>
-          <p>
-            You: Yes I can fulfill the request.
-          </p>
+          <div class="message">
+            <p>
+              You:
+            </p>
+            <p>
+              Yes I can fulfill the request.
+            </p>
+          </div>
           <p>
             WED 6 Mar 16:32
           </p>
@@ -157,9 +178,14 @@
           <p>
             Last Message:
           </p>
-          <p>
-            You: Yes I can fulfill the request.
-          </p>
+          <div class="message">
+            <p>
+              You:
+            </p>
+            <p>
+              Yes I can fulfill the request.
+            </p>
+          </div>
           <p>
             WED 6 Mar 16:32
           </p>
@@ -188,15 +214,28 @@
           <p>
             Last Message:
           </p>
-          <p>
-            You: Yes I can fulfill the request.
-          </p>
+          <div class="message">
+            <p>
+              You:
+            </p>
+            <p>
+              Yes I can fulfill the request. Alabasdasd123231
+            </p>
+          </div>
           <p>
             WED 6 Mar 16:32
           </p>
         </div>
       </div>
     </div>
-    
+    <div class="add-connection-container">
+      <a href={% url "connect" %}>
+
+        <span class="material-symbols-outlined">
+          person_add
+        </span>
+        
+      </a>
+    </div>
   </div>
 {% endblock %}
