@@ -4,11 +4,38 @@
   Connection Options
 {% endblock %}
 {% block dependancies %}
-  <link rel="stylesheet" href="{% static 'css/connect.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/options.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {% endblock %}
 {% block main %}
- 
+  <div class="connections-div">
+    <div class="connection-card">
+      <div class="card-header">
+        <p>hyus314</p>
+      </div>
+      <div class="card-body">
+        <div class="user-info">
+          <div class="profile-pic-div">
+            <img src={% static "img/default_pic.png" %} alt="user_pic">
+          </div>
+          <p>
+            Hyus Osmanov
+          </p>
+        </div>
+        <div class="message-container">
+          <p>
+            Last Message:
+          </p>
+          <p>
+            You: Yes I can fulfill the request.
+          </p>
+          <p>
+            WED 6 Mar 16:32
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

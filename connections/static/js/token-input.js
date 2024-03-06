@@ -1,13 +1,13 @@
 let input = document.querySelector('#input');
 const pattern = /^DG[A-Za-z0-9]{6}X$/;
+let button = document.querySelector('.button-div>button');
+button.disabled = true;
 
 input.addEventListener('input', async function () {
     const value = input.value
     let csrftoken = getCookie('csrftoken');
     slice(value);
     let tokenDiv = document.querySelector('.token-result-div');
-    let button = document.querySelector('.button-div>button');
-    button.disabled = true;
     if (pattern.test(value)) {
         fetch('/tokens/check_token/', {
             method: 'POST',
@@ -28,9 +28,9 @@ input.addEventListener('input', async function () {
                     tokenMessage.innerHTML = `This is ${data.user}'s token.`;
                 } else if (data.message === 'no') {
                     tokenDiv.style.backgroundColor = '#B71C1C';
+                    button.disabled = true;
                     if (!button.classList.contains('disabled')) {
                         button.classList.add('disabled');
-                        button.disabled = true;
                     }
                     tokenMessage.innerHTML = `This token is not valid.`;
                     if (data.user === 'user is the same') {
