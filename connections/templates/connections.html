@@ -12,6 +12,15 @@
 {% endblock %}
 {% block main %}
   <div class="connections-div">
+    <div class="add-connection-container">
+      <a href={% url "connect" %}>
+
+        <span class="material-symbols-outlined">
+          person_add
+        </span>
+        
+      </a>
+    </div>
     <div class="connection-card">
       <div class="card-header">
         hyus314
@@ -228,14 +237,7 @@
         </div>
       </div>
     </div>
-    <div class="add-connection-container">
-      <a href={% url "connect" %}>
-
-        <span class="material-symbols-outlined">
-          person_add
-        </span>
-        
-      </a>
-    </div>
+    
   </div>
+  <script src="{% static 'js/my-connections.js' %}"></script>
 {% endblock %}
