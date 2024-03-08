@@ -21,43 +21,45 @@
         
       </a>
     </div>
-    <div class="connection-card">
-      <div class="card-header">
-        hyus314
-      </div>
-      <div class="card-body">
-        <div class="user-info">
-          <div class="profile-pic-div">
-            <img src={% static "img/default_pic.png" %} alt="user_pic">
+      {% for connection_dict in users %}
+        <div class="connection-card">
+          <div class="card-header">
+            {{ connection_dict.connection.username }}
           </div>
-          <div class="user-full-name-div">
-            <p>
-              Hyus
-            </p>
-            <p>
-              Osmanov
-            </p>
+          <div class="card-body">
+            <div class="user-info">
+              <div class="profile-pic-div">
+                <img src={% static "img/default_pic.png" %} alt="user_pic">
+              </div>
+              <div class="user-full-name-div">
+                <p>
+                  {{ connection_dict.connection.first_name }}
+                </p>
+                <p>
+                  {{ connection_dict.connection.last_name }}
+                </p>
+              </div>
+            </div>
+            <div class="message-container">
+              <p>
+                Last Message:
+              </p>
+              <div class="message">
+                <p>
+                  You:
+                </p>
+                <p>
+                  Yes I can fulfill the request.
+                </p>
+              </div>
+              <p>
+                WED 6 Mar 16:32
+              </p>
+            </div>
           </div>
         </div>
-        <div class="message-container">
-          <p>
-            Last Message:
-          </p>
-          <div class="message">
-            <p>
-              You:
-            </p>
-            <p>
-              Yes I can fulfill the request.
-            </p>
-          </div>
-          <p>
-            WED 6 Mar 16:32
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="connection-card">
+      {% endfor %}
+    {% comment %} <div class="connection-card">
       <div class="card-header">
         hyus314
       </div>
@@ -235,8 +237,8 @@
             WED 6 Mar 16:32
           </p>
         </div>
-      </div>
-    </div>
+      </div> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
     
   </div>
   <script src="{% static 'js/my-connections.js' %}"></script>

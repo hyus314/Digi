@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.db.models import Q
 
 from .models import Connection
 from tokens.models import Tokens
@@ -33,7 +34,7 @@ def connect(request):
             return redirect('index')
         token_obj.delete()
         messages.success(request, f'Successfully connected with {user_two.username}')
-        return redirect('my_connections')
+        return redirect('options')
     else:
         messages.error(request, 'Invalid method')
         return redirect('index')
@@ -41,8 +42,15 @@ def connect(request):
 @login_required
 def my_connections(request):
     user_obj = get_object_or_404(User, pk=request.user.id)
+    connections = Connection.objects.get(user_one=user_obj)
     return render(request, 'my_connections.html', {'user': user_obj}) 
 
 @login_required
 def options(request):
-    return render(request, 'connections.html')
+    user = get_object_or_404(User, pk=request.user.id)
+    connections = Connection.objects.filter(Q(user_one=user) | Q(user_two=user))
+    connections_for_view = []
+    for connection in connections:
+        other_user = connection.user_one if connection.user_two == user else connection.user_two
+        connections_for_view.append({'connection': other_user})
+    return render(request, 'connections.html', {'users': connections_for_view})
