@@ -23,6 +23,7 @@
     </div>
       {% for connection_dict in users %}
         <div class="connection-card">
+          <input type="hidden" value="{{ connection_dict.encrypted_id }}" />
           <div class="card-header">
             {{ connection_dict.connection.username }}
           </div>
