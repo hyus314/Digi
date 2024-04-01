@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.2', '127.0.0.3']
 
 INSTALLED_APPS = [
     'base.apps.BaseConfig',
+    'chat.apps.ChatConfig',
     'accounts.apps.AccountsConfig',
     'tokens.apps.TokensConfig',
     'connections.apps.ConnectionsConfig',
