@@ -1,14 +1,26 @@
 {% extends 'layout.html' %}
 {% load static %}
 {% block title %}
-  Connections - {{ user.username }}
+  Chat - zeno
 {% endblock %}
 {% block dependancies %}
-  <link rel="stylesheet" href="{% static 'css/connect.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/chatbox.css' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 {% endblock %}
 {% block main %}
+<div class="title-line">
+  <p>chat with zeno</p>
+</div>
+<div class="chat-box-line">
+  <div class="chat-box">
 
+  </div>
+  <div class="input-line">
+    <input type="text">
+    <button><span class="material-symbols-outlined">arrow_upward</span></button>
+  </div>
+</div>
 {% endblock %}
