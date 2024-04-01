@@ -38,7 +38,7 @@
     padding: 1em;
     gap: 1em;
 }
-.input-line > input {
+.input-line >  input {
     flex: 19;
 }
 .input-line > button {
