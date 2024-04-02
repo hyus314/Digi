@@ -3,12 +3,14 @@
     background-color: black;
 }
 
-.title-line > p{
-    letter-spacing: 5px;
-    font-size: 50px;
+.message-line > p, .title-line > p {
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
+}
+.title-line > p{
+    letter-spacing: 5px;
+    font-size: 50px;
     color: white;
     font-weight: 300;
 }
@@ -70,4 +72,17 @@
     text-align: center;
     font-size: 50px;
     padding-top: 0.1em;
+}
+
+.message-line {
+    padding: 0.5em 1.5em;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.receiver > p {
+    margin-left: auto;
+    font-size: 20px;
 }
