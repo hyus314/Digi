@@ -28,6 +28,7 @@
     border: 1px solid black;
     height: 40em;
     width: 70%;
+    overflow: scroll;
 }
 .input-line {
     width: 70%;
@@ -75,14 +76,24 @@
 }
 
 .message-line {
-    padding: 0.5em 1.5em;
-    font-size: 20px;
+    font-size: 24px;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
 }
 
+.message-line > p {
+    padding: 0.5em 1em;
+    margin: 0.35em 1.2em;
+}
+
 .receiver > p {
     margin-left: auto;
-    font-size: 20px;
+    color: black;
+}
+
+.sender > p {
+    background-color: black;
+    color: white;
+    border-radius: 4em; 
 }
