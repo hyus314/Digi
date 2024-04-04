@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'tokens.apps.TokensConfig',
     'connections.apps.ConnectionsConfig',
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,6 +73,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'main.asgi.application'
 WSGI_APPLICATION = 'main.wsgi.application'
 
 
