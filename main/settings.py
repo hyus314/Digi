@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'tokens.apps.TokensConfig',
     'connections.apps.ConnectionsConfig',
-    "daphne",
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
