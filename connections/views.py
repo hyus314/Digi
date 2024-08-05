@@ -7,7 +7,7 @@ from django.db.models import Q
 
 from .models import Connection
 from tokens.models import Tokens
-from .protector import encrypt_data, decrypt_data, encrypt_and_encode
+from .protector import encrypt_and_encode
 from .helpers import sanitize_token, calculate_minutes_passed
 # Create your views here.
 @login_required

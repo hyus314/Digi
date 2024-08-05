@@ -28,6 +28,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.2', '127.0.0.3']
 
 
+import os
+from cryptography.fernet import Fernet
+
+# Retrieve the Fernet key from an environment variable or generate a new one
+FERNET_KEY = os.environ.get('FERNET_KEY', Fernet.generate_key().decode())
+
+# Ensure the key is byte-encoded for use in Fernet
+cipher_suite = Fernet(FERNET_KEY.encode())
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -149,7 +158,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],  # Replace with your Redis server
+            "hosts": [('127.0.0.1', 6379)],  
         },
     },
 }
