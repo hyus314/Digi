@@ -5,5 +5,4 @@ from . import views
 
 urlpatterns = [
     path('', views.chat, name="chat"),
-    re_path(r'ws/chat/(?P<room_name>\w+)/$', consumers.ChatConsumer.as_asgi())
 ]

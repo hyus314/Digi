@@ -85,7 +85,7 @@ DATABASES = {
     "default": {
         "ENGINE": "mssql",
         "NAME": "Digi",
-        "HOST": "DESKTOP-LOT7J7V\\SQLEXPRESS",
+        "HOST": "DESKTOP-85Q0589\\SQLEXPRESS",
         "TRUSTED_CONNECTION": "yes",
         "OPTIONS": {
             "driver": "ODBC Driver 17 for SQL Server", 
