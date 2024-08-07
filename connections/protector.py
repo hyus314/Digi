@@ -31,26 +31,17 @@ def decrypt_data(encrypted_data):
     
     return decrypted_data
 
-def encrypt_and_encode(room_name):
+def encrypt_and_truncate(room_name, max_length=95):
     # Encrypt the data
     encrypted = encrypt_data(room_name)
     
-    # Encode the encrypted data to base64
-    encoded = base64.urlsafe_b64encode(encrypted).decode('utf-8')
+    # Truncate the encrypted data to ensure it's less than max_length bytes
+    truncated_encrypted = encrypted[:max_length]
     
-    # Truncate to ensure it's less than 100 characters
-    return encoded[:95]
+    return truncated_encrypted
 
-def decode_and_decrypt(encoded_data):
-    # Add padding if necessary
-    missing_padding = len(encoded_data) % 4
-    if missing_padding:
-        encoded_data += '=' * (4 - missing_padding)
-    
-    # Decode the base64 encoded data
-    encrypted_data = base64.urlsafe_b64decode(encoded_data)
-    
-    # Decrypt the data
-    decrypted_data = decrypt_data(encrypted_data)
+def decrypt_truncated_data(truncated_encrypted_data):
+    # Directly decrypt the truncated encrypted data
+    decrypted_data = decrypt_data(truncated_encrypted_data)
     
     return decrypted_data

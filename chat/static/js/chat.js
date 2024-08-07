@@ -7,7 +7,7 @@ const chatSocket = new WebSocket(
     'ws://'
     + window.location.host
     + '/ws/chat/'
-    + encodeURIComponent(connectionId)
+    + connectionId
     + '/'
 );
 

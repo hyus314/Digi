@@ -7,7 +7,7 @@ from django.db.models import Q
 
 from .models import Connection
 from tokens.models import Tokens
-from .protector import encrypt_and_encode
+from .protector import encrypt_and_truncate
 from .helpers import sanitize_token, calculate_minutes_passed
 # Create your views here.
 @login_required
@@ -53,5 +53,5 @@ def options(request):
     connections_for_view = []
     for connection in connections:
         other_user = connection.user_one if connection.user_two == user else connection.user_two
-        connections_for_view.append({'connection': other_user, 'encrypted_id': encrypt_and_encode(connection.id)})
+        connections_for_view.append({'connection': other_user, 'encrypted_id': encrypt_and_truncate(connection.id)})
     return render(request, 'connections.html', {'users': connections_for_view})
