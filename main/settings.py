@@ -83,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'main.asgi.application'
+
 WSGI_APPLICATION = 'main.wsgi.application'
 
 
@@ -154,6 +154,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ASGI_APPLICATION = 'main.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

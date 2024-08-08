@@ -2,14 +2,14 @@ import json, base64
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from connections.protector import decrypt_truncated_data
+from connections.protector import decrypt_data
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         encrypted_room_name = self.scope["url_route"]["kwargs"]["room_name"]
         encrypted_room_name_bytes = encrypted_room_name
         print(encrypted_room_name_bytes + 'this is the text')
-        self.room_name = decrypt_truncated_data(encrypted_room_name_bytes)
+        self.room_name = decrypt_data(encrypted_room_name_bytes)
         self.room_group_name = 'chat_%s' % self.room_name
 
         async_to_sync(self.channel_layer.group_add)(
