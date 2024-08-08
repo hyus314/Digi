@@ -32,10 +32,8 @@ import os
 from cryptography.fernet import Fernet
 
 # Retrieve the Fernet key from an environment variable or generate a new one
-FERNET_KEY = os.environ.get('FERNET_KEY', Fernet.generate_key().decode())
-
-# Ensure the key is byte-encoded for use in Fernet
-cipher_suite = Fernet(FERNET_KEY.encode())
+key = Fernet.generate_key()
+cipher_suite = Fernet(key)
 
 # Application definition
 

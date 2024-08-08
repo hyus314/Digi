@@ -53,5 +53,7 @@ def options(request):
     connections_for_view = []
     for connection in connections:
         other_user = connection.user_one if connection.user_two == user else connection.user_two
-        connections_for_view.append({'connection': other_user, 'encrypted_id': encrypt_data(connection.id)})
+        row = {'connection': other_user, 'encrypted_id': encrypt_data(connection.id)}
+        connections_for_view.append(row)
+        print(type(row['encrypted_id']))
     return render(request, 'connections.html', {'users': connections_for_view})

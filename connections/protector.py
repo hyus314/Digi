@@ -8,10 +8,11 @@ from main.settings import cipher_suite
 # Function to encrypt data
 def encrypt_data(data):
     if not isinstance(data, str):
-        encrypted_data = cipher_suite.encrypt(str(data))
+        encrypted_data = cipher_suite.encrypt(str(data).encode('utf-8'))
+        test = str(encrypted_data)
     else:
         ValueError("Id is in wrong format.")
-    return encrypted_data
+    return base64.urlsafe_b64encode(encrypted_data).decode('utf-8')
 
 def decrypt_data(encrypted_data):
     decrypted_data = cipher_suite.decrypt(encrypted_data)
