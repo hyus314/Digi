@@ -1,5 +1,6 @@
 let sendButton = document.getElementById('send');
 const connectionId = document.getElementById('connectionId').value;
+let other_user = '';
 console.log(connectionId);
 
 window.addEventListener('load', function() {
@@ -13,6 +14,7 @@ window.addEventListener('load', function() {
         pElement.innerHTML = `chat with ${data.other_user}`;
         chatWithDiv.appendChild(pElement);
         document.title = `Chat - ${data.other_user}`;
+        other_user = data.other_user;
     })
     .catch(error => {
         console.error('Error:', error);
@@ -27,17 +29,26 @@ const chatSocket = new WebSocket(
     + '/'
 );
 
+//  this has to be done using the session user name, because that will be always the sender's username
+//  whether the sender is this user or the other one will determine the .onmessage function
+
 sendButton.addEventListener('click', (e) => {
     const messageInputDom = document.querySelector('#messageInput');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'message': message,
+                'user': other_user
             }));
             messageInputDom.value = '';
     e.preventDefault();
     console.log('clicked');
 });
 
+//  send the message with the username
+//  receive a message using a json dictionary with keys message and user
+//  if user == other_user render as the message of the other user if not render as yours
+//  all you have to do is change the sender in the database
+//  the model construction
 
 // Incoming message LIVE
 
