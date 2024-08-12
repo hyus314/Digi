@@ -63,7 +63,7 @@ chatSocket.onmessage = function(e) {
     // document.querySelector('#chat-log').value += (data.message + '\n');
 
     
-
+    console.log('here ?');
     console.log(data);
 }; 
 

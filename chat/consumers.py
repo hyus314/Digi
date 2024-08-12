@@ -33,7 +33,6 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        print(text_data)
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name, {"type": "chat.message", "message": message}
@@ -43,16 +42,13 @@ class ChatConsumer(WebsocketConsumer):
     def chat_message(self, event):
         message = event["message"]
 
-        # Check if the user is authenticated
         if self.scope['user'].is_authenticated:
-            username = self.scope['user'].username  # The user who sent the message
-            # Include the username in the message
+            username = self.scope['user'].username 
             self.send(text_data=json.dumps({
                 "message": message,
-                "username": username  # This is the sender's username
+                "username": username  
             }))
         else:
-            # Handle the case where the user is not authenticated
             self.send(text_data=json.dumps({
                 "message": "User not authenticated"
             }))
