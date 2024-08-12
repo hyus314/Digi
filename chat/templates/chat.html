@@ -13,7 +13,9 @@
 {% block main %}
 <input type="hidden" id="connectionId" value="{{ chat_id }}">
 <div class="title-line">
-  <p>chat with zeno</p>
+  {% comment %} this here should send a http get request for the name 
+  of the other the current user is chatting with {% endcomment %}
+  <p>chat with zeno</p> 
 </div>
 <div class="chat-box-line">
   <div class="chat-box">
