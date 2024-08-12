@@ -1,7 +1,6 @@
 from django.shortcuts import render
-
-import json
 from django.http import JsonResponse, HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
 from .models import Connection
 from connections.protector import decrypt_data
 import base64
@@ -10,7 +9,8 @@ def chat(request):
     chat_id = request.GET.get('id')
     return render(request, 'chat.html', {'chat_id': chat_id})
 
-def get_connection_users(request):
+@login_required
+def get_connection_user(request):
     if request.method == 'GET':
         encrypted_connection_id = request.GET.get('connection_id')
         
@@ -30,10 +30,20 @@ def get_connection_users(request):
             # Retrieve the connection from the database
             connection = Connection.objects.get(pk=connection_id)
             
+            # Get the currently logged-in user
+            current_user = request.user
+            
+            # Determine the other user in the connection
+            if connection.user_one == current_user:
+                other_user = connection.user_two
+            elif connection.user_two == current_user:
+                other_user = connection.user_one
+            else:
+                return HttpResponseBadRequest('The current user is not part of this connection.')
+
             # Prepare the response data
             data = {
-                'user_one': connection.user_one.username,
-                'user_two': connection.user_two.username,
+                'other_user': other_user.username,
             }
             
             # Return as a JSON response

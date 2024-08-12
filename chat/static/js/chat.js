@@ -3,10 +3,12 @@ const connectionId = document.getElementById('connectionId').value;
 console.log(connectionId);
 
 window.addEventListener('load', function() {
-    fetch(`/chat/get-connection-users/?connection_id=${encodeURIComponent(connectionId)}`)
+    fetch(`/chat/get-connection-user/?connection_id=${encodeURIComponent(connectionId)}`)
     .then(response => response.json())
     .then(data => {
-       console.log(data)
+    //    console.log(data);
+        const chatWithDiv = document.querySelector('body > div.title-line > p');
+        console.log(data);
     })
     .catch(error => {
         console.error('Error:', error);
