@@ -8,7 +8,11 @@ window.addEventListener('load', function() {
     .then(data => {
     //    console.log(data);
         const chatWithDiv = document.querySelector('body > div.title-line > p');
-        console.log(data);
+        chatWithDiv.innerHTML = '';
+        const pElement = document.createElement('p');
+        pElement.innerHTML = `chat with ${data.other_user}`;
+        chatWithDiv.appendChild(pElement);
+        document.title = `Chat - ${data.other_user}`;
     })
     .catch(error => {
         console.error('Error:', error);
