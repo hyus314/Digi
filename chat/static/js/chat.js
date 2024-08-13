@@ -1,13 +1,16 @@
 let sendButton = document.getElementById('send');
 const connectionId = document.getElementById('connectionId').value;
 let other_user = '';
+let logged_in_user = '';
 console.log(connectionId);
 
 window.addEventListener('load', function() {
     fetch(`/chat/get-logged-in/`)
     .then(response => response.json())
     .then(data => {
-        console.log(data.logged_in);
+        // console.log(data.logged_in);
+        logged_in_user = data.logged_in;
+        console.log(logged_in_user);
     }).catch(error => {
         console.error('Error:', error);
     });
@@ -45,7 +48,7 @@ sendButton.addEventListener('click', (e) => {
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
                 'message': message,
-                'user': other_user
+                'user': logged_in_user
             }));
             messageInputDom.value = '';
     e.preventDefault();
@@ -81,12 +84,24 @@ const chatBox = document.querySelector('.chat-box');
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-
     // this is the standart code from the documentation:
     // document.querySelector('#chat-log').value += (data.message + '\n');
 
-    
-
+    const message = data.message;
+    const user = data.user;
+    let messageDiv = document.createElement('div');
+    let messageText = document.createElement('p');
+    messageText.innerHTML = message;
+    messageDiv.classList.add('message-line');
+    if (user == logged_in_user) {
+        messageDiv.classList.add('receiver');
+    } else if (user == other_user) {
+        messageDiv.classList.add('sender');
+    } else {
+        alert('error another user');
+    }
+    messageDiv.appendChild(messageText);
+    chatBox.appendChild(messageDiv);
     console.log(data);
 }; 
 

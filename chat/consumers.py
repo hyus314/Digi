@@ -31,24 +31,33 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
+        # Load the JSON data sent from the frontend
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
-        # Send message to room group
+        
+        # Extract the message and user from the data
+        message = text_data_json.get("message")
+        user = text_data_json.get("user")
+        
+        # Print the received data to the server console
+        print(f"Received message: '{message}' from user: {user}")
+        
+        # Send the message to the room group
         async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name, {"type": "chat.message", "message": message}
+            self.room_group_name,
+            {
+                "type": "chat.message",
+                "message": message,
+                "user": user,  # Pass the sender's username
+            }
         )
 
     # Receive message from room group
     def chat_message(self, event):
         message = event["message"]
+        user = event["user"]  # Get the sender's username
 
-        if self.scope['user'].is_authenticated:
-            username = self.scope['user'].username 
-            self.send(text_data=json.dumps({
-                "message": message,
-                "username": username  
-            }))
-        else:
-            self.send(text_data=json.dumps({
-                "message": "User not authenticated"
-            }))
+        # Send message back to WebSocket with the sender's username
+        self.send(text_data=json.dumps({
+            "message": message,
+            "user": user,
+        }))
