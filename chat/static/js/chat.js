@@ -4,6 +4,14 @@ let other_user = '';
 console.log(connectionId);
 
 window.addEventListener('load', function() {
+    fetch(`/chat/get-logged-in/`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.logged_in);
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+
     fetch(`/chat/get-connection-user/?connection_id=${encodeURIComponent(connectionId)}`)
     .then(response => response.json())
     .then(data => {
@@ -50,6 +58,21 @@ sendButton.addEventListener('click', (e) => {
 //  all you have to do is change the sender in the database
 //  the model construction
 
+// new plan:
+
+//  since we cannot access the current logged in user from the session
+//  (technically we can if we use a variable here received from the server, but I won't)
+//  we will just send the message and the other variable of the json dict will be
+//  NOT the SENDER, but the person we send THE MESSAGE TO
+//  and that is how exactly we will save it in the database
+//  and when we receive the message we will check whether the user that received the message
+//  is the same as the one here saved in the other_user variable 
+
+// none of these worked
+// you should just use the local variables in js for sender and sent to usernames and 
+// then actually proceed to the functionality of sending the message through out the ChatConsumer
+// and then you will see sender username correct in both user's screens
+
 // Incoming message LIVE
 
 // For all messages you will create a get request when the whole page is loaded.
@@ -63,7 +86,7 @@ chatSocket.onmessage = function(e) {
     // document.querySelector('#chat-log').value += (data.message + '\n');
 
     
-    console.log('here ?');
+
     console.log(data);
 }; 
 

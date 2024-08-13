@@ -55,3 +55,9 @@ def get_connection_user(request):
             return HttpResponseBadRequest(str(e))
     
     return HttpResponseBadRequest('Invalid request method.')
+
+@login_required
+def get_logged_in(request):
+        user = request.user  
+        username = user.username 
+        return JsonResponse({"logged_in": username})
