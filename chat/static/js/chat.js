@@ -98,7 +98,7 @@ chatSocket.onmessage = function(e) {
     } else if (user == other_user) {
         messageDiv.classList.add('sender');
     } else {
-        alert('error another user');
+        alert('error another user: ' + user);
     }
     messageDiv.appendChild(messageText);
     chatBox.appendChild(messageDiv);

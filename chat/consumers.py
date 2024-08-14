@@ -3,7 +3,8 @@ import json, base64
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from connections.protector import decrypt_data
-
+from .models import Message
+from connections.models import Connection
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -23,6 +24,18 @@ class ChatConsumer(WebsocketConsumer):
 
         self.accept()
 
+        # Retrieve all messages related to this chat room from the database
+        connection = Connection.objects.get(pk=self.room_name)
+        messages = Message.objects.filter(connection=connection)
+
+        # Send each message to the client directly (not via group_send)
+        for msg in messages:
+            self.chat_message({
+                "message": msg.message,
+                "user": msg.sender.username,
+            })
+
+
     def disconnect(self, close_code):
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
@@ -35,23 +48,43 @@ class ChatConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         
         # Extract the message and user from the data
-        message = text_data_json.get("message")
-        user = text_data_json.get("user")
+        message_content = text_data_json.get("message")
+        sender_username = text_data_json.get("user")
         
         # Print the received data to the server console
-        print(f"Received message: '{message}' from user: {user}")
+        print(f"Received message: '{message_content}' from user: {sender_username}")
         
+        # Retrieve the user object for the sender
+        try:
+            sender = User.objects.get(username=sender_username)
+        except User.DoesNotExist:
+            print(f"User {sender_username} does not exist.")
+            return
+
+        # Retrieve the connection object based on the room name
+        try:
+            connection = Connection.objects.get(id=self.room_name)
+        except Connection.DoesNotExist:
+            print(f"Connection with ID {self.room_name} does not exist.")
+            return
+
+        # Save the message to the database
+        message = Message.objects.create(
+            connection=connection,
+            message=message_content,
+            sender=sender
+        )
+
         # Send the message to the room group
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 "type": "chat.message",
-                "message": message,
-                "user": user,  # Pass the sender's username
+                "message": message_content,
+                "user": sender_username,  # Pass the sender's username
             }
         )
-
-    # Receive message from room group
+    # Send message to room group
     def chat_message(self, event):
         message = event["message"]
         user = event["user"]  # Get the sender's username
