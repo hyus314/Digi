@@ -1,4 +1,6 @@
 {% load static %}
+{% load django_browser_reload %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,5 +72,6 @@
       </div>
       <!-- Copyright -->
     </footer>
+    {% django_browser_reload_script %}
   </body>
 </html>
