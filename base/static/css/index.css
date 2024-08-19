@@ -1,13 +1,36 @@
-.dgce-text {
-    font-family: "Tourney", sans-serif;
+.connection-container {
+    margin: auto 4.7em;
+}
+
+.connection-container p {
+    font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: 200px;
+    font-weight: 300;
     font-style: normal;
-    font-variation-settings:
-        "wdth" 100;
-    text-align: center;
+}
+
+p.mini-title {
+    font-size: 57px;
+    font-weight: bold;
     color: black;
-    background-color: blue;
+    padding-block: 1.4em ;
+}
+
+p.basic {
+    font-size: 30px;
+    text-align:justify;
+    padding-bottom: 1em;
+}
+
+.dgce-text {
+    font-family: "Tourney", sans-serif !important; 
+    font-optical-sizing: auto !important;
+    font-weight: 600 !important;
+    font-size: 250px !important;
+    font-style: normal !important;
+    font-variation-settings:
+        "wdth" 100 !important;
+    text-align: center !important;
+    color: black !important;
 }
 

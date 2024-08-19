@@ -6,30 +6,59 @@ Home
 {% block dependancies %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-  href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@700&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
-  rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@700&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 {% block main %}
 
 <div class="connection-container">
   <div class="introduciton-container">
-    <p>
+    <p class="mini-title">
       Welcome to DIGI – Your Gateway to Seamless Conversations
     </p>
-    <p>
+    <p class="basic">
       At DIGI, we believe in the power of connection. Our platform is designed to make reaching out and engaging with others as simple and intuitive as possible. Whether you're connecting with a friend, a colleague, or someone new, DIGI is here to guide you through the process, step by step.
     </p>
-    <p>
+    <p class="mini-title">
       How DIGI Works
     </p>
-    <p> 
+    <p class="basic"> 
       We've crafted a streamlined four-step process to ensure you can establish meaningful connections effortlessly. Let's walk you through the DGCE journey:
     </p>
   </div>
   <p class="dgce-text">
     DGCE
   </p>
+  <p class="mini-title"> 
+    1. Deduco – The Beginning of Your Connection
+  </p>
+  <p class="basic"> 
+    Your journey starts with Deduco, where you take the initiative to connect with someone. Whether you're inviting a friend or reaching out to a new acquaintance, this step is all about making the first move. Simply refer the person to chat on DIGI, and the process begins.
+  </p>
+  <p class="mini-title"> 
+    2. Generation – Creating Your Access
+  </p>
+  <p class="basic"> 
+    Once the invitation is received, it's time for Generation. In this step, the second user generates a unique token. This token is a digital key that will enable the connection, ensuring both users are securely linked.
+  </p>
+  <p class="mini-title">
+    3. Connection – Bridging the Gap
+  </p>
+  <p class="basic"> 
+    With a valid token in hand, it's time for Connection. The first user enters the token, bridging the gap between the two parties. This is where the magic happens, as both users are brought together on the platform.   
+  </p>
+  <p class="mini-title">
+    4. Establishment – Connection Achieved
+  </p>
+  <p class="basic"> 
+    Finally, we reach Establishment. At this stage, the connection is fully established, and both users are now linked on DIGI. From here, the conversation can flow freely, with DIGI facilitating a seamless and engaging chat experience.
+  </p>
+  <p class="mini-title">
+    Ready to Get Started?
+  </p>
+  <p class="basic">
+    Whether you're looking to reconnect with an old friend or forge new relationships, DIGI is here to make it happen. Join us today, and experience the future of online communication.
+  </p> 
 </div>
 {% endblock %}
