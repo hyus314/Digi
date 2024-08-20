@@ -1,9 +1,9 @@
 let sendButton = document.getElementById('send');
-const connectionId = document.getElementById('connectionId').value;
 let other_user = '';
 let logged_in_user = '';
-console.log(connectionId);
+// console.log(connectionId);
 
+const connectionId = document.getElementById('connectionId').value;
 
 const chatSocket = new WebSocket(
     'ws://'
@@ -25,7 +25,7 @@ function fetchUserData() {
         .then(response => response.json())
             .then(data => {
                 logged_in_user = data.logged_in;
-                console.log(logged_in_user);
+                // console.log(logged_in_user);
             }),
             fetch(`/chat/get-connection-user/?connection_id=${encodeURIComponent(connectionId)}`)
             .then(response => response.json())
@@ -51,7 +51,7 @@ function fetchUserData() {
                 + connectionId
                 + '/'
             );
-            console.log('User data fetched, setting up onmessage handler.');
+            // console.log('User data fetched, setting up onmessage handler.');
             
             chatSocket.onmessage = function(e) {
                 const data = JSON.parse(e.data);
@@ -67,7 +67,7 @@ function fetchUserData() {
                     messageDiv.classList.add('receiver');
 
                     messageDiv.setAttribute('data-bs-toggle', 'modal');
-                    messageDiv.setAttribute('data-bs-target', '#exampleModal');
+                    messageDiv.setAttribute('data-bs-target', '#messageModal');
 
                     messageDiv.addEventListener('click', function() {
                         messageDiv.classList.add('clicked-message');
@@ -84,7 +84,7 @@ function fetchUserData() {
 
                 chatBox.scrollTop = chatBox.scrollHeight;
 
-                console.log(data);
+                // console.log(data);
             };
             chatSocket.onclose = function(e) {
                 console.error('Chat socket closed unexpectedly');
@@ -98,7 +98,7 @@ function fetchUserData() {
                         }));
                         messageInputDom.value = '';
                 e.preventDefault();
-                console.log('clicked');
+                // console.log('clicked');
             });
         }).catch(error => {
             console.error('Error:', error);
