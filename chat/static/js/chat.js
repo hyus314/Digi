@@ -33,9 +33,9 @@ function fetchUserData() {
                 const chatWithDiv = document.querySelector('body > div.title-line > p');
                 chatWithDiv.innerHTML = '';
                 const pElement = document.createElement('p');
-                pElement.innerHTML = `Chat with ${data.other_user}`;
+                pElement.innerHTML = `chat with ${data.other_user}`;
                 chatWithDiv.appendChild(pElement);
-                document.title = `Chat - ${data.other_user}`;
+                document.title = `chat - ${data.other_user}`;
                 other_user = data.other_user;
             })
         ]);
@@ -65,6 +65,14 @@ function fetchUserData() {
                 
                 if (user == logged_in_user) {
                     messageDiv.classList.add('receiver');
+
+                    messageDiv.setAttribute('data-bs-toggle', 'modal');
+                    messageDiv.setAttribute('data-bs-target', '#exampleModal');
+
+                    messageDiv.addEventListener('click', function() {
+                        messageDiv.classList.add('clicked-message');
+                    });
+
                 } else if (user == other_user) {
                     messageDiv.classList.add('sender');
                 } else {
@@ -73,6 +81,9 @@ function fetchUserData() {
                 
                 messageDiv.appendChild(messageText);
                 chatBox.appendChild(messageDiv);
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+
                 console.log(data);
             };
             chatSocket.onclose = function(e) {

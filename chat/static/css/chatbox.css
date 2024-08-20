@@ -87,9 +87,21 @@
     margin: 0.35em 1.2em;
 }
 
+.message-line.receiver {
+    align-items: right;
+}
+
 .receiver > p {
     margin-left: auto;
     color: black;
+    border-radius: 4em; 
+    cursor: pointer;
+    transition: background-color 0.33s ease;
+}
+
+.receiver>p:hover {
+    background-color: #b9b1b6;
+    
 }
 
 .sender > p {
