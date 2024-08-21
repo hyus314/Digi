@@ -9,8 +9,11 @@ messageModal.addEventListener('shown.bs.modal', function() {
 });
 
 messageModal.addEventListener('hidden.bs.modal', function() {
+    console.log('triggered');
     const messageContent = document.getElementById('messageContent');
     messageContent.value = '';
     const clickedMessage = document.getElementsByClassName('clicked-message')[0];
-    clickedMessage.classList.remove('clicked-message');
+    if (clickedMessage) {
+        clickedMessage.classList.remove('clicked-message');
+    }
 });

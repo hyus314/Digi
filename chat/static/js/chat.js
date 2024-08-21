@@ -55,6 +55,27 @@ function fetchUserData() {
             
             chatSocket.onmessage = function(e) {
                 const data = JSON.parse(e.data);
+                console.log('triggered at all');
+                const action = data.action;
+                
+                    if (action === 'delete') {
+                        const hiddenInputField = document.querySelector(`input[value="${data.message_id}"]`);
+                        console.log('triggered delete');
+                    // Check if the hidden input field was found
+                    if (hiddenInputField) {
+                        // Find the closest parent div with the class 'message-div'
+                        const messageDiv = hiddenInputField.closest('.message-line');
+                        
+                        console.log('Deleted message:', messageDiv); // Log the entire messageDiv for debugging
+                        
+                        // If the messageDiv was found, remove it from the DOM
+                        if (messageDiv) {
+                            messageDiv.remove();
+                        }
+                    }
+                    return;
+                }
+            
                 const message = data.message;
                 const user = data.user;
                 const encryptedMsgId = data.message_id;
@@ -64,12 +85,13 @@ function fetchUserData() {
                 messageText.innerHTML = message;
                 messageDiv.classList.add('message-line');
                 
+                const hiddenIdField = document.createElement('input');
+                hiddenIdField.type = 'hidden'; 
+                hiddenIdField.value = encryptedMsgId;
+                messageDiv.appendChild(hiddenIdField);
+
                 if (user == logged_in_user) {
                     messageDiv.classList.add('receiver');
-                    const hiddenIdField = document.createElement('input');
-                    hiddenIdField.type = 'hidden'; 
-                    hiddenIdField.value = encryptedMsgId;
-                    messageDiv.appendChild(hiddenIdField);
                     messageDiv.setAttribute('data-bs-toggle', 'modal');
                     messageDiv.setAttribute('data-bs-target', '#messageModal');
 
@@ -104,35 +126,30 @@ function fetchUserData() {
                 e.preventDefault();
                 // console.log('clicked');
             });
+            const deleteBtn = document.querySelector('button.delete');
+            const editBtn = document.querySelector('button.edit');
+            deleteBtn.addEventListener('click', function() {
+                const clickedMessage = document.getElementsByClassName('clicked-message')[0];
+                const encryptedId = clickedMessage.querySelector('input');
+                const modalElement = document.getElementById('messageModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                console.log('delete button clicked');
+                console.log(encryptedId.value);
+
+                chatSocket.send(JSON.stringify({
+                    'action': 'delete',
+                    'user': logged_in_user,
+                    'message_id': encryptedId.value
+                }));
+
+                modal.hide();
+            });
+
+            editBtn.addEventListener('click', function() {
+                console.log('edit button clicked');
+            });
+
         }).catch(error => {
             console.error('Error:', error);
         });
     });
-    
-    // Handle error here:
-    
-
-    //  send the message with the username
-    //  receive a message using a json dictionary with keys message and user
-    //  if user == other_user render as the message of the other user if not render as yours
-    //  all you have to do is change the sender in the database
-    //  the model construction
-    
-    // new plan:
-    
-    //  since we cannot access the current logged in user from the session
-    //  (technically we can if we use a variable here received from the server, but I won't)
-    //  we will just send the message and the other variable of the json dict will be
-    //  NOT the SENDER, but the person we send THE MESSAGE TO
-    //  and that is how exactly we will save it in the database
-    //  and when we receive the message we will check whether the user that received the message
-    //  is the same as the one here saved in the other_user variable 
-    
-    // none of these worked
-    // you should just use the local variables in js for sender and sent to usernames and 
-    // then actually proceed to the functionality of sending the message through out the ChatConsumer
-    // and then you will see sender username correct in both user's screens
-    
-    // Incoming message LIVE
-    
-    // For all messages you will create a get request when the whole page is loaded.

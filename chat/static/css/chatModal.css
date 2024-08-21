@@ -25,4 +25,43 @@
 #messageModal > div > div > div.modal-footer button {
     font-size: 25px  !important;
     padding: 0.2em 1em;
+    border: 2px solid black;
+    color: black;
+    background-color: #ccc;
+}
+
+button.delete {
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 1.2rem; 
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.delete:hover {
+    background-color: #c0392b !important; 
+}
+
+button.close {
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.close:hover {
+    background-color: #7f8c8d !important; 
+}
+
+button.edit {
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.edit:hover {
+    background-color: #2980b9 !important; 
 }

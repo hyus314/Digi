@@ -49,6 +49,7 @@ class ChatConsumer(WebsocketConsumer):
         # Load the JSON data sent from the frontend
         text_data_json = json.loads(text_data)
         
+        action = text_data_json.get('action')
         # Extract the message and user from the data
         message_content = text_data_json.get("message")
         sender_username = text_data_json.get("user")
@@ -56,15 +57,31 @@ class ChatConsumer(WebsocketConsumer):
         
         if encrypted_message_id:
             try:
-                message_id = decrypt_data(encrypted_message_id)
+                message_id = decrypt_msg(encrypted_message_id)
             except Exception as e:
                 print(f"Failed to decrypt message ID: {e}")
                 return
 
-        try:
-            message = Message.objects.get(id=message_id)
-        except Message.DoesNotExist:
-            print(f"Message with ID {message_id} does not exist.")
+        if action:
+            try:
+                message = Message.objects.get(id=message_id)
+            except Message.DoesNotExist:
+                print(f"Message with ID {message_id} does not exist.")
+                return
+        print('action')
+        if action == 'delete':
+            print("user tried to delete message.")
+            message.delete()
+
+            # Broadcast the deletion to the room group
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    "type": "chat_message_delete",
+                    "message_id": encrypted_message_id,
+                    "action": "delete"
+                }
+            )
             return
 
         # Print the received data to the server console
@@ -103,7 +120,7 @@ class ChatConsumer(WebsocketConsumer):
                 "message_id": encrypted_message_id,  # Send the encrypted message ID
             }
         )
-        
+
     # Send message to room group
     def chat_message(self, event):
         message = event["message"]
@@ -114,4 +131,12 @@ class ChatConsumer(WebsocketConsumer):
             "message": message,
             "user": user,
             "message_id": event.get("message_id"),  # Pass the message ID if available
+        }))
+    
+    def chat_message_delete(self, event):
+        print("user delete message")
+    # Send a message to WebSocket indicating the message was deleted
+        self.send(text_data=json.dumps({
+            "action": "delete",
+            "message_id": event["message_id"],
         }))
