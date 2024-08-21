@@ -57,7 +57,8 @@ function fetchUserData() {
                 const data = JSON.parse(e.data);
                 const message = data.message;
                 const user = data.user;
-                
+                const encryptedMsgId = data.message_id;
+                console.log(data);
                 let messageDiv = document.createElement('div');
                 let messageText = document.createElement('p');
                 messageText.innerHTML = message;
@@ -65,7 +66,10 @@ function fetchUserData() {
                 
                 if (user == logged_in_user) {
                     messageDiv.classList.add('receiver');
-
+                    const hiddenIdField = document.createElement('input');
+                    hiddenIdField.type = 'hidden'; 
+                    hiddenIdField.value = encryptedMsgId;
+                    messageDiv.appendChild(hiddenIdField);
                     messageDiv.setAttribute('data-bs-toggle', 'modal');
                     messageDiv.setAttribute('data-bs-target', '#messageModal');
 
