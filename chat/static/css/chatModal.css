@@ -17,17 +17,12 @@
     font-size: 30px;
 }
 
-#messageModal > div > div > div.modal-footer button {
-    font-family: "DM Sans", sans-serif !important;
-    font-optical-sizing: auto;
-    font-style: normal;
-    font-size: 20px  !important;
-}
 
 #messageModal > div {
     max-width: 700px;
 }
 
-.modal-footer button {
-    font-size: 200px !important;
+#messageModal > div > div > div.modal-footer button {
+    font-size: 25px  !important;
+    padding: 0.2em 1em;
 }
