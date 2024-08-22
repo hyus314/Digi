@@ -58,19 +58,29 @@ function fetchUserData() {
                 console.log('triggered at all');
                 const action = data.action;
                 
-                    if (action === 'delete') {
-                        const hiddenInputField = document.querySelector(`input[value="${data.message_id}"]`);
-                        console.log('triggered delete');
-                    // Check if the hidden input field was found
+                if (action === 'delete') {
+                    const hiddenInputField = document.querySelector(`input[value="${data.message_id}"]`);
                     if (hiddenInputField) {
-                        // Find the closest parent div with the class 'message-div'
                         const messageDiv = hiddenInputField.closest('.message-line');
                         
-                        console.log('Deleted message:', messageDiv); // Log the entire messageDiv for debugging
-                        
-                        // If the messageDiv was found, remove it from the DOM
                         if (messageDiv) {
                             messageDiv.remove();
+                        }
+                    }
+                    return;
+                }
+                else if (action == 'edit') {
+                    console.log('triggering edit. ');
+                    const hiddenInputField = document.querySelector(`input[value="${data.message_id}"]`);
+                    const newMessage = data.new_message;
+                    if (hiddenInputField) {
+                        console.log(data.message_id);
+                        console.log('triggering edit. 222');
+                        const messageDiv = hiddenInputField.closest('.message-line');
+                        
+                        if (messageDiv) {
+                            const messageP = messageDiv.querySelector('p');
+                            messageP.innerHTML = newMessage;
                         }
                     }
                     return;
@@ -112,9 +122,14 @@ function fetchUserData() {
 
                 // console.log(data);
             };
+
+
             chatSocket.onclose = function(e) {
                 console.error('Chat socket closed unexpectedly');
             };
+
+            // Send message functionality
+
             sendButton.addEventListener('click', (e) => {
                 const messageInputDom = document.querySelector('#messageInput');
                         const message = messageInputDom.value;
@@ -126,27 +141,48 @@ function fetchUserData() {
                 e.preventDefault();
                 // console.log('clicked');
             });
+
+            // Delete functionality
+
             const deleteBtn = document.querySelector('button.delete');
-            const editBtn = document.querySelector('button.edit');
             deleteBtn.addEventListener('click', function() {
                 const clickedMessage = document.getElementsByClassName('clicked-message')[0];
                 const encryptedId = clickedMessage.querySelector('input');
                 const modalElement = document.getElementById('messageModal');
                 const modal = bootstrap.Modal.getInstance(modalElement);
-                console.log('delete button clicked');
-                console.log(encryptedId.value);
-
+                // console.log('delete button clicked');
+                // console.log(encryptedId.value);
+                
                 chatSocket.send(JSON.stringify({
                     'action': 'delete',
                     'user': logged_in_user,
                     'message_id': encryptedId.value
                 }));
-
+                
                 modal.hide();
             });
+            
+            // Edit functionality
 
+            const editBtn = document.querySelector('button.edit');
             editBtn.addEventListener('click', function() {
-                console.log('edit button clicked');
+                const clickedMessage = document.getElementsByClassName('clicked-message')[0];
+                const encryptedId = clickedMessage.querySelector('input');
+                const modalElement = document.getElementById('messageModal');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                // console.log('delete button clicked');
+                // console.log(encryptedId.value);
+                const editMessageContent = document.getElementById('messageContent').value;
+                // console.log(editMessageContent);    
+                chatSocket.send(JSON.stringify({
+                    'action': 'edit',
+                    'new_message': editMessageContent,
+                    'user': logged_in_user,
+                    'message_id': encryptedId.value
+                }));
+                
+                modal.hide();
+                // console.log('edit button clicked');
             });
 
         }).catch(error => {

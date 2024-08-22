@@ -68,6 +68,7 @@ class ChatConsumer(WebsocketConsumer):
             except Message.DoesNotExist:
                 print(f"Message with ID {message_id} does not exist.")
                 return
+            
         print('action')
         if action == 'delete':
             print("user tried to delete message.")
@@ -83,7 +84,23 @@ class ChatConsumer(WebsocketConsumer):
                 }
             )
             return
-
+        elif action == 'edit':
+            new_message = text_data_json.get('new_message')
+            if not new_message == message.message:
+                message.message = new_message
+                message.save()
+                async_to_sync(self.channel_layer.group_send)(
+                    self.room_group_name,
+                    {
+                        "type": "chat_message_edit",
+                        "message_id": encrypted_message_id,
+                        "new_message": new_message,
+                        "action": "edit"
+                    }
+                )
+            return
+        
+        
         # Print the received data to the server console
         print(f"Received message: '{message_content}' from user: {sender_username}")
         
@@ -126,7 +143,6 @@ class ChatConsumer(WebsocketConsumer):
         message = event["message"]
         user = event["user"]  # Get the sender's username
 
-    # Send message back to WebSocket with the sender's username and encrypted message ID
         self.send(text_data=json.dumps({
             "message": message,
             "user": user,
@@ -135,8 +151,14 @@ class ChatConsumer(WebsocketConsumer):
     
     def chat_message_delete(self, event):
         print("user delete message")
-    # Send a message to WebSocket indicating the message was deleted
         self.send(text_data=json.dumps({
             "action": "delete",
+            "message_id": event["message_id"],
+        }))
+
+    def chat_message_edit(self, event):
+        self.send(text_data=json.dumps({
+            "action": "edit",
+            "new_message": event["new_message"],
             "message_id": event["message_id"],
         }))
