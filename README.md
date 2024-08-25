@@ -21,7 +21,7 @@ Both of these terminologies are unique for Django applications and they serve as
 ### WebSocket 
 - Key functionalities and Differences.
 
-How is a WebSocket connection established? Let's go through the URLS first. As we all know the `https://..` beginnings of URLS WebSockets begin with ``ws://``. In our scenario whenever a user wants to connect to a ws://-based server it's client browser sends a JS WebSocket 'request' to that server, this is the piece of code that establishes that:
+How is a WebSocket connection established? Let's go through the URLS first. As we all know the `https://..` beginnings of URLS WebSockets begin with ``ws://..``. In our scenario whenever a user wants to connect to a `ws://`-based server it's client browser sends a JS WebSocket 'request' to that server, this is the piece of code that establishes that:
 
 `const chatSocket = new WebSocket(
                 'ws://'
@@ -31,14 +31,16 @@ How is a WebSocket connection established? Let's go through the URLS first. As w
                 + '/'
             );`
 
-Where window.location.host is the host of our application and connectionId is the encrypted id that gets decrypted in the Consumers file. We'll talk about Consumers later. Within this lies a HTTP request that is sent to that server and the response is with code 101, which means Switching Protocols and afterwards the client and server are now 'speaking' in WebSocket. That is called the Handshake. Afterwards, the exchanged data between the client and server comes in a form called 'frames', where the 'payload' of the data trying to be sent to the server takes that shape. After that 'payload' is sent, the server (depending on how it is configured) can either send back another frame with new data to either the client that sent the first frame, or send data to all of the users connected to that server. The data sent around all the time takes the shape of the variable
-scope
+Where `window.location.host` is the host of our application and `connectionId` is the encrypted id that gets decrypted in the Consumers file. We'll talk about Consumers later. Within this lies a HTTP request that is sent to that server and the response is with code 101, which means Switching Protocols and afterwards the client and server are now 'speaking' in WebSocket. That is called the Handshake. Afterwards, the exchanged data between the client and server comes in a form called `frames`, where the `payload` of the data trying to be sent to the server takes that shape. After that `payload` is sent, the server (depending on how it is configured) can either send back another frame with new data to either the client that sent the first frame, or send data to all of the users connected to that server. The data sent around all the time takes the shape of the variable
+
+`scope`
+
 in code and that variable servers as a Python Dict that includes the type of action sent to the server, what the server would do after receiving it and how many users would it affect, in our case only two. All of this is done in the 
 
 `consumers.py` 
 
 file in our `chat` folder. The payload can have a crucial role for executing different forms of operations, but in our case the payload is the content of the message, the username of the sender, and the type of action to be performed (add, edit or delete). After any of these three operations the data is sent back to the other user through the asynchronous methods: 
-chat_ message, chat_message_delete, chat_message_edit
+`chat_ message`, `chat_message_delete`, `chat_message_edit`
 Here is the piece of code that executes the sending back of the newly added message to the chat room, so the other user can see live:
 
 `async_to_sync(self.channel_layer.group_send)(
@@ -50,3 +52,24 @@ Here is the piece of code that executes the sending back of the newly added mess
                 "message_id": encrypted_message_id, 
             }
         )`
+
+This piece of code is executed in the 
+`receive` functionality of the consumers.py file, which is basically triggered in the chatSocket.send function in the chat.js JS file located in the chat/static/js directory. Here is a sum-up and a basic workflow of the explanation we gave earlier:
+
+1. Two users connect to a chatting room through WebSocket
+- 'ws://'....
+Here is the result in the console of the Redis chat server (we'll talk about Redis later) after the connection: 
+`WebSocket HANDSHAKING /ws/chat/Z0FBQUFBQm15MjlPNXcwQWdzUGlobHl3NE4tVHlQak81NWQwbEg2Rm9MUVJyMklYcV9LdWJvQnhXWThRZUhoWlhrVnFjZElScXJlR3Z6YW9TWGdSdm9TaWN6dFloR1R5SWc9PQ==/ [127.0.0.1:51849] `  
+`WebSocket CONNECT /ws/chat/Z0FBQUFBQm15MjlPNXcwQWdzUGlobHl3NE4tVHlQak81NWQwbEg2Rm9MUVJyMklYcV9LdWJvQnhXWThRZUhoWlhrVnFjZElScXJlR3Z6YW9TWGdSdm9TaWN6dFloR1R5SWc9PQ==/ [127.0.0.1:51849]`
+
+*the cryptic info after the the third slashes are the encrypted connection id's for each of the rooms*
+
+2. After the handshake the server can accept the frames. The important part of the frames are the payload. This terminology comes from the low-level explanation for WebSocket:
+
+https://en.wikipedia.org/wiki/WebSocket
+
+But what is really important for us is the 'scope' variable where we have our properties for the type of operation and the message contents.
+
+3. Final part is the process of disconnecting from the server. Happens automatically when the user leaves the page or closes the browser. Here is how it looks on the log of the server:
+
+WebSocket DISCONNECT /ws/chat/Z0FBQUFBQm15MjlPNXcwQWdzUGlobHl3NE4tVHlQak81NWQwbEg2Rm9MUVJyMklYcV9LdWJvQnhXWThRZUhoWlhrVnFjZElScXJlR3Z6YW9TWGdSdm9TaWN6dFloR1R5SWc9PQ==/ [127.0.0.1:51843]   
