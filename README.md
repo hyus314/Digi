@@ -21,7 +21,7 @@ Both of these terminologies are unique for Django applications and they serve as
 ### WebSocket 
 - Key functionalities and Differences.
 
-How is a WebSocket connection established? Let's go through the URLS first. As we all know the https://.. beginnings of URLS WebSockets begin with ws://. In our scenario whenever a user wants to connect to a ws://-based server it's client browser sends a JS WebSocket 'request' to that server, this is the piece of code that establishes that:
+How is a WebSocket connection established? Let's go through the URLS first. As we all know the `https://..` beginnings of URLS WebSockets begin with ``ws://``. In our scenario whenever a user wants to connect to a ws://-based server it's client browser sends a JS WebSocket 'request' to that server, this is the piece of code that establishes that:
 
 `const chatSocket = new WebSocket(
                 'ws://'
