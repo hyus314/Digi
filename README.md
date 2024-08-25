@@ -1,4 +1,4 @@
-Documentation for DIGI
+## Documentation for DIGI
 
 Digi is a django channels chat-based web application that was developped using the following technology:
 - Daphne ASGI
@@ -8,14 +8,18 @@ Digi is a django channels chat-based web application that was developped using t
 
 Apart from HTTP, this application also has the WebSocket protocol embedded within its' structure. WebSocket is crucial for establishing connections with a live server, sending and receiving data from that server, and at the same time sending data to other users connected as well. ASGI technology is the first to help solving the problem of structurizing everything written in the last sentence. ASGI is the successor to WSGI. 
 
-ASGI and WSGI
+# ASGI and WSGI
 
 Both of these terminologies are unique for Django applications and they serve as gateways for requests and responses. Since they have one common operation to complete, the difference lies within the completion itself. Let's take a look at couple of examples and realise why WSGI is not suitable for our application.
-WSGI - Stands for Web Server Gateway Interface. Extremely popular for HTTP Django applications. Great for single handling HTTP requests and responses and that's it. Why wouldn't that be suitable for a chatting application? Picture this scenario: You are chatting with a friend and everytime you complete something in the chat, whether you are sending, editing or deleting a message, everytime you'll have to refresh the page, in order to see what your message your friend has sent to you. WSGI is a safe option for most applications, but here we need to come up with a more user-friendly interface. That's when ASGI comes in.
 
-ASGI - Stands for Asynchronous Server Gateway Interface. ASGI, as we said earlier, is the successor to WSGI and that would mean that it does everything that WSGI can, extends some functionalities and has other unique abilities. In order to understand why ASGI is so great for this case we have to go through the WebSocket protocol very quickly. Apart from HTTP, which is request and response type of protocol, WebSocket supports an open connection between the client and the server, allowing for bi-directional data to transport between the used devices. 
+# WSGI
+- Stands for Web Server Gateway Interface. Extremely popular for HTTP Django applications. Great for single handling HTTP requests and responses and that's it. Why wouldn't that be suitable for a chatting application? Picture this scenario: You are chatting with a friend and everytime you complete something in the chat, whether you are sending, editing or deleting a message, everytime you'll have to refresh the page, in order to see what your message your friend has sent to you. WSGI is a safe option for most applications, but here we need to come up with a more user-friendly interface. That's when ASGI comes in.
 
-WebSocket - Key functionalities and Differences.
+# ASGI 
+- Stands for Asynchronous Server Gateway Interface. ASGI, as we said earlier, is the successor to WSGI and that would mean that it does everything that WSGI can, extends some functionalities and has other unique abilities. In order to understand why ASGI is so great for this case we have to go through the WebSocket protocol very quickly. Apart from HTTP, which is request and response type of protocol, WebSocket supports an open connection between the client and the server, allowing for bi-directional data to transport between the used devices. 
+
+# WebSocket 
+- Key functionalities and Differences.
 
 How is a WebSocket connection established? Let's go through the URLS first. As we all know the https://.. beginnings of URLS WebSockets begin with ws://. In our scenario whenever a user wants to connect to a ws://-based server it's client browser sends a JS WebSocket 'request' to that server, this is the piece of code that establishes that:
 
