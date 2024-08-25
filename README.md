@@ -18,19 +18,20 @@ Both of these terminologies are unique for Django applications and they serve as
 ### ASGI 
 - Stands for Asynchronous Server Gateway Interface. ASGI, as we said earlier, is the successor to WSGI and that would mean that it does everything that WSGI can, extends some functionalities and has other unique abilities. In order to understand why ASGI is so great for this case we have to go through the WebSocket protocol very quickly. Apart from HTTP, which is request and response type of protocol, WebSocket supports an open connection between the client and the server, allowing for bi-directional data to transport between the used devices. 
 
-### WebSocket 
+### WebSocket
 - Key functionalities and Differences.
 
 How is a WebSocket connection established? Let's go through the URLS first. As we all know the `https://..` beginnings of URLS WebSockets begin with ``ws://..``. In our scenario whenever a user wants to connect to a `ws://`-based server it's client browser sends a JS WebSocket 'request' to that server, this is the piece of code that establishes that:
 
-`const chatSocket = new WebSocket(
+```javascript
+const chatSocket = new WebSocket(
                 'ws://'
                 + window.location.host
                 + '/ws/chat/'
                 + connectionId
                 + '/'
-            );`
-
+            );
+```
 Where `window.location.host` is the host of our application and `connectionId` is the encrypted id that gets decrypted in the Consumers file. We'll talk about Consumers later. Within this lies a HTTP request that is sent to that server and the response is with code 101, which means Switching Protocols and afterwards the client and server are now 'speaking' in WebSocket. That is called the Handshake. Afterwards, the exchanged data between the client and server comes in a form called `frames`, where the `payload` of the data trying to be sent to the server takes that shape. After that `payload` is sent, the server (depending on how it is configured) can either send back another frame with new data to either the client that sent the first frame, or send data to all of the users connected to that server. The data sent around all the time takes the shape of the variable
 
 `scope`
@@ -43,7 +44,8 @@ file in our `chat` folder. The payload can have a crucial role for executing dif
 `chat_ message`, `chat_message_delete`, `chat_message_edit`
 Here is the piece of code that executes the sending back of the newly added message to the chat room, so the other user can see live:
 
-`async_to_sync(self.channel_layer.group_send)(
+```python
+async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 "type": "chat.message",
@@ -51,10 +53,14 @@ Here is the piece of code that executes the sending back of the newly added mess
                 "user": sender_username,
                 "message_id": encrypted_message_id, 
             }
-        )`
+        )
+```
 
 This piece of code is executed in the 
-`receive` functionality of the consumers.py file, which is basically triggered in the chatSocket.send function in the chat.js JS file located in the chat/static/js directory. Here is a sum-up and a basic workflow of the explanation we gave earlier:
+`receive`
+functionality of the consumers.py file, which is basically triggered in the 
+`chatSocket.send`
+function in the `chat.js` JS file located in the `chat/static/js` directory. Here is a sum-up and a basic workflow of the explanation we gave earlier:
 
 1. Two users connect to a chatting room through WebSocket
 - 'ws://'....
@@ -73,3 +79,38 @@ But what is really important for us is the 'scope' variable where we have our pr
 3. Final part is the process of disconnecting from the server. Happens automatically when the user leaves the page or closes the browser. Here is how it looks on the log of the server:
 
 WebSocket DISCONNECT /ws/chat/Z0FBQUFBQm15MjlPNXcwQWdzUGlobHl3NE4tVHlQak81NWQwbEg2Rm9MUVJyMklYcV9LdWJvQnhXWThRZUhoWlhrVnFjZElScXJlR3Z6YW9TWGdSdm9TaWN6dFloR1R5SWc9PQ==/ [127.0.0.1:51843]   
+
+Receiving back data to the client is a symmetrical process to the systemized process we talked about earlier.
+Here we have 2 key set of methods:
+The three methods in the consumers.py file 
+`chat_message`, `chat_message_delete`, `chat_message_edit`
+and the 
+`chat.onmessage`
+method in the chat/static/js directory, which is executed by the client.
+```python
+ def chat_message(self, event):
+        message = event["message"]
+        user = event["user"]  # Get the sender's username
+        self.send(text_data=json.dumps({
+            "message": message,
+            "user": user,
+            "message_id": event.get("message_id"),
+         }))
+```
+  ^^^ this method is invoked by this async_to_sync block of code
+```python   
+async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                "type": "chat.message",
+                "message": message_content,
+                "user": sender_username,
+                "message_id": encrypted_message_id, 
+            }
+        )
+```
+the server knows to invoke the chat_message method from the 
+first property of the json dict
+`"type": "chat.message"`
+After the chat_message method is invoked, the `chatSocket.onmessage` is triggered, and depending on the type of the operation, the front-end will adjust accordingly.
+The remaining properties are sent back as data needed to render the operation in the chatting room.
