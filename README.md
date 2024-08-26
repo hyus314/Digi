@@ -114,3 +114,51 @@ first property of the json dict
 `"type": "chat.message"`
 After the chat_message method is invoked, the `chatSocket.onmessage` is triggered, and depending on the type of the operation, the front-end will adjust accordingly.
 The remaining properties are sent back as data needed to render the operation in the chatting room.
+
+## Redis
+Redis is a great tool for executing this large operation in our project. We are using Redis, because we need the hardware to run all of these operations on.
+Since we have not deployed this project we configured it to work on local level by stimulating the start of a Redis server using Docker, we installed 
+`channels_redis`, *check requirements.txt*
+so we can establish our confiugration. The next step was to actually configure the middleware which is done in the `settings.py` in our `main` directory:
+```python
+ASGI_APPLICATION = 'main.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  
+        },
+    },
+}
+```
+It's good to know that Redis acts like an in-memory database that can deal with all the information and incoming and outgoing requests in our `consumers.py` file.
+And this is the docker command that we need in order to run our chatting server:
+`docker run --rm -p 6379:6379 redis` 
+## MSSQL
+![digi database](https://github.com/user-attachments/assets/898ee15c-9d37-4199-928d-b8076e920b22)
+This is our database, we have the following functions:
+
+Authorized User System; 
+
+Tables for our messages;
+
+Tables for our tokens;
+
+- Tokens are used so users can connect with each other;
+
+The rest of the tables are generated from Django's migration system;
+
+Using a RDBMS is a safe choice for keeping the messages, connections and users' info safe in a storage system.
+
+## Token system
+The whole purpose of this application is to protect users' privacy. Each user can connect with another only with the latter's permission.
+This way, no user can see how many other users exist, the sole purpose is to chat within a room, where both of the users know each other.
+That is why the Token system exists and whithin it lies the whole `DGCE` connection system.
+Each user connects after another generates a token and sends it back to the first person via a different source.
+# Functionality overhaul: 
+![digi 1](https://github.com/user-attachments/assets/047f53de-5ddc-43d9-b64d-b9367e5f26af)
+![dig 2](https://github.com/user-attachments/assets/0deccfb2-6108-4516-9062-ffc55602ae8e)
+![digi 3](https://github.com/user-attachments/assets/29924667-20aa-49a7-8b7d-04b4656b0cac)
+![44](https://github.com/user-attachments/assets/4a6bfdb3-f302-4bd0-be5b-565cd3bed77e)
+![445](https://github.com/user-attachments/assets/04063df4-249f-4dd2-87e1-700f4de5497e)
+![66](https://github.com/user-attachments/assets/0beeb45e-2746-4d66-9553-455c60056cf1)
