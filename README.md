@@ -1,3 +1,7 @@
+# Video Presentation on YouTube
+
+https://www.youtube.com/watch?v=QFGYsWniUvM
+
 # Documentation for DIGI
 
 Digi is a django channels chat-based web application that was developped using the following technology:
